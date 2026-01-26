@@ -10,6 +10,16 @@ const text = () => {
         e.preventDefault();
     };
 
+    //버튼 테스트
+    const onTest = (e) => {
+        e.preventDefault();
+    };
+
+    //수정 기능
+    const onUpdate = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <div>
             <h1>text</h1>
@@ -17,7 +27,9 @@ const text = () => {
                 <input type="text" />
                 <button type="submit">등록</button>
             </form>
+            <button onClick={onUpdate}>수정</button>
             <button onClick={onDelete}>삭제</button>
+            <button onClick={onTest}>버튼 테스트</button>
         </div>
     );
 };
