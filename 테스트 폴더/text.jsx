@@ -1,7 +1,7 @@
 const text = () => {
 
     //등록기능 
-    const onSubmit = (e) => {
+    const onSubmit32555 = (e) => {
         e.preventDefault();
     };
 
