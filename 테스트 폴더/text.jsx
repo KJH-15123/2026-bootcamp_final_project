@@ -21,7 +21,7 @@ const text = () => {
     };
 
     //수정 기능
-    const onUpdate = (e) => {
+    const onUpdate2 = (e) => {
         e.preventDefault();
     };
 
