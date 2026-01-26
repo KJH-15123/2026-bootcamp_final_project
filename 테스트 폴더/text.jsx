@@ -5,6 +5,11 @@ const text = () => {
         e.preventDefault();
     };
 
+    //ㅋ키키
+    const onKiki = (e) => {
+        e.preventDefault();
+    };
+
     //수정기능
     const onUpdate = (e) => {
         e.preventDefault();
@@ -27,6 +32,9 @@ const text = () => {
             <button onClick={onUpdate}>수정</button>
             <button onClick={onDelete}>삭제</button>
             <button onClick={onTest}>버튼 테스트</button>
+            <button onClick={onUpdate2}>수정</button>
+            <button onClick={onPotato}>감자 서버 on</button>
+            <button onClick={onKiki}>키키</button>
         </div>
     );
 };
