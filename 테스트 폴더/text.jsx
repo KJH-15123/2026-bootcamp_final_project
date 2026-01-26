@@ -5,6 +5,11 @@ const text = () => {
         e.preventDefault();
     };
 
+    //수정기능
+    const onUpdate = (e) => {
+        e.preventDefault();
+    };
+
     //삭제기능
     const onDelete = (e) => {
         e.preventDefault();
