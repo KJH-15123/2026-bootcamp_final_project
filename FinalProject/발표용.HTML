@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyEarth 프레젠테이션</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 기본 설정 */
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 20px 0;
+            background-color: #050A07; /* 깊고 어두운 녹녹색/블랙 배경 */
+            display: grid;
+            gap: 40px;
+            place-items: center;
+        }
+
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            min-width: 1280px;
+            min-height: 720px;
+            background-color: #0B1F15; /* 메인 슬라이드 진한 녹색 배경 */
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 60px;
+            font-family: 'Open+Sans', sans-serif;
+            color: #E2E8F0; /* 밝은 텍스트 기본값 */
+            flex-shrink: 0;
+        }
+
+        /* 배경 디자인 요소 (Abstract Shapes) */
+        .slide-container::before {
+            content: "";
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, rgba(11, 31, 21, 0) 70%);
+            z-index: 0;
+        }
+
+        /* 타이포그래피 */
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; margin: 0; }
+        .slide-title {
+            font-size: 44px;
+            color: #F8FAFC;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            border-left: 8px solid #FBBF24; /* 골드 포인트 컬러 */
+            padding-left: 20px;
+        }
+
+        p { font-size: 20px; line-height: 1.6; }
+
+        /* 레이아웃: 공통 콘텐츠 영역 */
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Slide 1: Title Layout */
+        .title-layout {
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .title-layout h1 { font-size: 100px; color: #F8FAFC; line-height: 1; margin-bottom: 20px; }
+        .title-layout .main-copy { font-size: 32px; font-weight: 600; color: #34D399; margin-bottom: 10px; }
+        .title-layout .sub-copy { font-size: 24px; color: #A7F3D0; max-width: 800px; }
+        .title-layout .footer-meta { margin-top: 60px; font-family: 'Montserrat'; font-size: 16px; color: #94A3B8; opacity: 0.8; }
+
+        /* Two Column Layout */
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; }
+        .two-column.tiled > div {
+            background-color: #132A1E;
+            padding: 40px;
+            border-radius: 20px;
+            border-bottom: 5px solid #10B981;
+        }
+
+        /* Tiled Icons */
+        .tiled-content { display: flex; gap: 25px; width: 100%; }
+        .tile {
+            flex: 1;
+            background: #132A1E;
+            padding: 30px;
+            border-radius: 24px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .tile .icon { font-size: 48px; color: #34D399; margin-bottom: 20px; }
+        .tile h3 { font-size: 24px; color: #F8FAFC; margin-bottom: 15px; }
+        .tile p { font-size: 16px; text-align: left; color: #CBD5E1; }
+
+        /* Image Containers */
+        .image-wrapper { width: 100%; height: 400px; border-radius: 24px; overflow: hidden; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Highlighted Numbers */
+        .highlight-number-container { display: flex; align-items: center; gap: 50px; }
+        .number-box { flex: 0 0 350px; text-align: center; }
+        .number-box .number { font-size: 120px; font-family: 'Montserrat'; color: #FBBF24; line-height: 1; }
+        .number-box .label { font-size: 24px; font-weight: bold; color: #F8FAFC; }
+
+        /* Table Style */
+        .table-layout table { width: 100%; border-collapse: collapse; }
+        .table-layout th { background: #064E3B; color: #D1FAE5; padding: 20px; text-align: left; font-size: 22px; }
+        .table-layout td { padding: 20px; border-bottom: 1px solid #1F2937; font-size: 18px; color: #E2E8F0; }
+        .table-layout tr:nth-child(even) { background-color: #112A1F; }
+
+        /* Section Title Layout */
+        .section-title-layout { text-align: center; justify-content: center; height: 100%; }
+        .section-title-layout h2 { font-size: 72px; color: #F8FAFC; margin-bottom: 20px; }
+        .section-title-layout p { font-size: 28px; color: #34D399; }
+
+        /* Bleed Image Right */
+        .slide-container.bleed-image-layout {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 0;
+            align-items: start;
+        }
+        .bleed-text-side { padding: 60px; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+        .bleed-image-side { height: 720px; width: 100%; object-fit: cover; }
+
+        /* List Styles */
+        .styled-list { list-style: none; padding: 0; }
+        .styled-list li { position: relative; padding-left: 40px; margin-bottom: 20px; font-size: 20px; }
+        .styled-list li::before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-size: 24px;
+        }
+        
+        .tech-tags { display: flex; gap: 10px; margin-top: 20px; }
+        .tag { background: #064E3B; color: #A7F3D0; padding: 8px 16px; border-radius: 50px; font-weight: 600; font-size: 14px; }
+
+        /* 신규 메모 카드 스타일 */
+        .memo-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 50px 60px;
+            width: 900px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            border-left: 10px solid #34D399;
+        }
+        .memo-card::after {
+            content: "\f249"; /* Notepad icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 40px;
+            right: 50px;
+            font-size: 80px;
+            color: rgba(52, 211, 153, 0.1);
+        }
+        .memo-header { margin-bottom: 30px; }
+        .role-tag { background: #34D399; color: #050A07; padding: 4px 12px; border-radius: 6px; font-weight: 800; font-size: 14px; text-transform: uppercase; margin-bottom: 15px; display: inline-block; letter-spacing: 1px; }
+        .memo-name { font-size: 60px; color: #F8FAFC; margin-bottom: 10px; font-family: 'Montserrat'; }
+        .memo-title { font-size: 26px; color: #FBBF24; font-weight: 600; letter-spacing: -0.5px; }
+        .memo-list { list-style: none; padding: 0; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
+        .memo-list li { font-size: 22px; color: #CBD5E1; margin-bottom: 18px; position: relative; padding-left: 35px; line-height: 1.4; }
+        .memo-list li::before { 
+            content: "\f0a2"; /* Pin icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute; 
+            left: 0; 
+            color: #34D399; 
+            font-size: 18px;
+            top: 4px;
+        }
+
+        /* Code Review 스타일 */
+        .code-block {
+            background: #0D1117;
+            border-radius: 15px;
+            padding: 25px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #C9D1D9;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            border: 1px solid #30363D;
+            overflow-x: hidden;
+            white-space: pre-wrap !important;
+            word-break: break-all;
+            width: 100%;
+            text-align: left;
+        }
+        .code-keyword { color: #FF7B72; font-weight: bold; }
+        .code-method { color: #D2A8FF; }
+        .code-string { color: #A5D6FF; }
+        .code-comment { color: #8B949E; font-style: italic; }
+        .code-annotation { color: #FFA657; }
+        .code-number { color: #79C0FF; }
+        .code-highlight { background: rgba(56, 139, 253, 0.15); border-left: 4px solid #58A6FF; margin: 0 -25px; padding: 0 25px; display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Title_Slide -->
+    <div class="slide-container" id="slide1">
+        <div class="title-layout">
+            <i class="fa-solid fa-earth-americas" style="font-size: 150px; color: #34D399; margin-bottom: 30px; display: block;"></i>
+            <h1 style="letter-spacing: 2px;">EasyEarth</h1>
+            <p class="main-copy">일상 속 환경 보호를 위한 에코 라이프 게이미피케이션 플랫폼</p>
+            <p class="sub-copy" style="margin-top: 5px;">기획의 치밀함과 기술적 깊이로 완성한 지속 가능한 환경 실천</p>
+            
+            <!-- 조원 명단 업데이트 -->
+            <div style="margin-top: 50px; display: flex; align-items: flex-end; gap: 50px; font-family: 'Montserrat', sans-serif; justify-content: center;">
+                <!-- Leader group -->
+                <div style="text-align: left; border-left: 3px solid #34D399; padding-left: 20px;">
+                    <div style="font-size: 13px; color: #34D399; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 11px;">Leader</div>
+                    <div style="font-size: 20px; color: #F8FAFC; font-weight: 600;">유지훈</div>
+                </div>
+                <!-- Members group -->
+                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                    <div style="font-size: 13px; color: #94A3B8; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid rgba(148, 163, 184, 0.3); width: 100%; padding-bottom: 5px; margin-bottom: 5px;">Member</div>
+                    <div style="display: flex; gap: 30px;">
+                        <span style="font-size: 20px; color: #F8FAFC; font-weight: 600;">김재형</span>
+                        <span style="font-size: 20px; color: #F8FAFC; font-weight: 600;">김지환</span>
+                        <span style="font-size: 20px; color: #F8FAFC; font-weight: 600;">조주현</span>
+                        <span style="font-size: 20px; color: #F8FAFC; font-weight: 600;">황선욱</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-meta" style="margin-top: 50px;">Modern Eco-Tech Editorial, Technical Portfolio | 2026</div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Table of Contents -->
+    <div class="slide-container" id="slide_toc">
+        <h2 class="slide-title">Contents</h2>
+        <div class="content-area">
+            <div style="display: flex; flex-direction: column; gap: 20px; width: 800px; margin: 0 auto;">
+                <div style="display: flex; align-items: center; gap: 30px; background: rgba(255,255,255,0.03); padding: 15px 40px; border-radius: 20px; border-left: 5px solid #34D399;">
+                    <span style="font-family: 'Montserrat'; font-size: 32px; font-weight: 800; color: #34D399; opacity: 0.5;">01</span>
+                    <span style="font-size: 24px; color: #F8FAFC; font-weight: 600;">기획 의도 및 프로젝트 핵심 가치</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 30px; background: rgba(255,255,255,0.03); padding: 15px 40px; border-radius: 20px; border-left: 5px solid #60A5FA;">
+                    <span style="font-family: 'Montserrat'; font-size: 32px; font-weight: 800; color: #60A5FA; opacity: 0.5;">02</span>
+                    <span style="font-size: 24px; color: #F8FAFC; font-weight: 600;">시스템 아키텍처 (Design)</span>
+                </div>
+                <!-- Merged Technical Sections -->
+                <div style="display: flex; align-items: flex-start; gap: 30px; background: rgba(255,255,255,0.03); padding: 15px 40px; border-radius: 20px; border-left: 5px solid #FBBF24;">
+                    <span style="font-family: 'Montserrat'; font-size: 32px; font-weight: 800; color: #FBBF24; opacity: 0.5; margin-top: -5px;">03</span>
+                    <div>
+                        <span style="font-size: 24px; color: #F8FAFC; font-weight: 600; display: block; margin-bottom: 5px;">기능 구현</span>
+                        <div style="font-size: 14px; color: #94A3B8; display: flex; gap: 12px; flex-wrap: wrap;">
+                            <span style="background: rgba(148, 163, 184, 0.1); padding: 3px 10px; border-radius: 8px;">유지훈</span>
+                            <span style="background: rgba(148, 163, 184, 0.1); padding: 3px 10px; border-radius: 8px;">김재형</span>
+                            <span style="background: rgba(148, 163, 184, 0.1); padding: 3px 10px; border-radius: 8px;">김지환</span>
+                            <span style="background: rgba(148, 163, 184, 0.1); padding: 3px 10px; border-radius: 8px;">황선욱</span>
+                            <span style="background: rgba(148, 163, 184, 0.1); padding: 3px 10px; border-radius: 8px;">조주현</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 30px; background: rgba(255,255,255,0.03); padding: 15px 40px; border-radius: 20px; border-left: #F87171 solid 5px;">
+                    <span style="font-family: 'Montserrat'; font-size: 32px; font-weight: 800; color: #F87171; opacity: 0.5;">04</span>
+                    <span style="font-size: 24px; color: #F8FAFC; font-weight: 600;">기능 시연 및 프로젝트 결언 (Impact)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 30px; background: rgba(255,255,255,0.03); padding: 15px 40px; border-radius: 20px; border-left: 5px solid #34D399;">
+                    <span style="font-family: 'Montserrat'; font-size: 32px; font-weight: 800; color: #34D399; opacity: 0.5;">05</span>
+                    <span style="font-size: 24px; color: #F8FAFC; font-weight: 600;">마무리 정리 (Closing)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Image Left, Text Right (Pain Points & Solutions) -->
+    <div class="slide-container" id="slide2">
+        <h2 class="slide-title">기획 의도: 기술적 해법</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <!-- Left: Image -->
+                <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 500px;">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 150px; color: #F87171; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC; font-size: 24px;">Environmental Challenges</h3>
+                </div>
+                
+                <!-- Right: Text (Stacked) -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div style="background-color: #132A1E; padding: 30px; border-radius: 20px; border-left: 5px solid #F87171;">
+                        <h3 style="color:#F87171; margin-bottom:15px;">Pain Points</h3>
+                        <ul class="styled-list" style="margin-bottom: 0;">
+                            <li style="color:#E2E8F0; font-size:18px; margin-bottom:12px;">딱딱하고 지루한 기존 환경 보호 접근</li>
+                            <li style="color:#E2E8F0; font-size:18px; margin-bottom:12px;">높은 진입장벽과 관련 정보 부족</li>
+                            <li style="color:#E2E8F0; font-size:18px; margin-bottom:0;">지속적인 참여를 이끄는 동기부여 결여</li>
+                        </ul>
+                    </div>
+                    <div style="background-color: #132A1E; padding: 30px; border-radius: 20px; border-left: 5px solid #34D399;">
+                        <h3 style="color:#34D399; margin-bottom:15px;">The Solution</h3>
+                        <ul class="styled-list" style="margin-bottom: 0;">
+                            <li style="font-size:18px; margin-bottom:12px;">서울시 공공 데이터 기반의 정보 접근성 강화</li>
+                            <li style="font-size:18px; margin-bottom:12px;">포인트, 레벨, 칭호 시스템의 심리적 보상</li>
+                            <li style="font-size:18px; margin-bottom:0;">JWT, STOMP, AI 등 최신 기술 스택의 확장성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Tiled_Text_With_Icons (Core Pillars) -->
+    <div class="slide-container" id="slide3">
+        <h2 class="slide-title">프로젝트 4대 핵심 가치</h2>
+        <div class="content-area">
+            <div class="tiled-content">
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-universal-access"></i></div>
+                    <h3>접근성</h3>
+                    <p>서울시 환경 데이터 및 실시간 경로 탐색 연동을 통한 정보 비대칭 해결.</p>
+                </div>
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-comments"></i></div>
+                    <h3>커뮤니티</h3>
+                    <p>실시간 채팅과 반응형 소통을 통한 강력한 사용자 자정 작용.</p>
+                </div>
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-gamepad"></i></div>
+                    <h3>게이미피케이션</h3>
+                    <p>데일리 퀘스트, 퀴즈, 에코 숍으로 즐거운 행동 변화 유도.</p>
+                </div>
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-brain"></i></div>
+                    <h3>AI 일상화</h3>
+                    <p>Google Gemini API 기반의 개인화된 1:1 에코 가이드 제공.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: System Architecture -->
+    <div class="slide-container" id="slide4">
+        <h2 class="slide-title">System Architecture</h2>
+        <div class="content-area">
+            <div class="two-column" style="grid-template-columns: 1fr 1.2fr;">
+                <div>
+                    <div style="margin-bottom:20px;">
+                        <h3 style="color:#F8FAFC; font-size:20px;">Core Tech Stack</h3>
+                        <p style="font-size:16px; color:#94A3B8; margin-top:5px;">React (Context API), Spring Boot (JWT, STOMP)</p>
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <h3 style="color:#F8FAFC; font-size:20px;">Open APIs</h3>
+                        <div style="font-size:15px; color:#94A3B8; margin-top:5px; line-height:1.6;">
+                            <strong style="color:#A7F3D0;">ORS API:</strong> 도보, 자전거, 자동차 길찾기<br>
+                            <strong style="color:#A7F3D0;">SeoulMap API:</strong> 장소 API<br>
+                            <strong style="color:#A7F3D0;">ODsay API:</strong> 대중교통 길찾기<br>
+                            <strong style="color:#A7F3D0;">NaverMap API:</strong> 지도 API<br>
+                            <strong style="color:#A7F3D0;">기상청 API:</strong> 최신 날씨 상황 정보 제공<br>
+                            <strong style="color:#A7F3D0;">NYT API:</strong> 글로벌 환경 뉴스 연동<br>
+                            <strong style="color:#A7F3D0;">Google Gemini API:</strong> AI 문서 번역, 요약 및 1:1 맞춤형 멘트 제공
+                        </div>
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <h3 style="color:#F8FAFC; font-size:20px;">Deployment</h3>
+                        <div style="font-size:15px; color:#94A3B8; margin-top:5px; line-height:1.6;">
+                            <strong style="color:#FBBF24;">백/프론트 배포:</strong> AWS EC2 인스턴스<br>
+                            <strong style="color:#FBBF24;">데이터베이스 배포:</strong> Oracle Cloud
+                        </div>
+                    </div>
+                    <div class="tech-tags" style="display:flex; flex-wrap:wrap; gap:8px;">
+                        <span class="tag">AWS EC2</span><span class="tag">Oracle Cloud</span><span class="tag">React</span><span class="tag">Spring Boot</span>
+                    </div>
+                </div>
+                <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 450px;">
+                    <i class="fa-solid fa-sitemap" style="font-size: 150px; color: #34D399; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC; font-size: 24px;">Architecture System</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Divider: 기능시연 (was 마무리) -->
+    <div class="slide-container" id="slide_closing_divider">
+        <div class="section-title-layout content-area" style="text-align: center;">
+            <i class="fa-solid fa-desktop" style="font-size: 80px; color: #60A5FA; margin-bottom: 30px;"></i>
+            <h2 style="font-size: 60px; color: #F8FAFC; margin-bottom: 20px;">Live Demo Phase</h2>
+            <div style="width: 100px; height: 4px; background: #60A5FA; margin: 0 auto; margin-bottom: 30px;"></div>
+            <p style="font-size: 24px; color: #94A3B8;">실제 구동 화면 시연</p>
+        </div>
+    </div>
+
+
+
+    
+    <!-- [Leader] Yoo Jihoon Section: Arch, Security, Map, Shop -->
+    <div class="slide-container" id="slide_leader_merged">
+        <div class="content-area" style="align-items: center;">
+            <div class="memo-card">
+                <div class="memo-header">
+                   <span class="role-tag">Team Leader</span>
+                   <h2 class="memo-name">유지훈</h2>
+                   <div class="memo-title">핵심 구현 기술 / 풀스택 인프라</div>
+                </div>
+                <ul class="memo-list">
+                    <li style="font-size: 19px; margin-bottom: 20px;"><strong style="color: #F8FAFC; display:block; margin-bottom: 5px; font-size: 22px;">1. 네이버 지도 API 연동 및 공공 데이터 위치 기반 가이드 구현:</strong> 실시간 위치 데이터를 활용하여 사용자에게 필요한 장소 정보를 제공하는 핵심 기능 구축</li>
+                    <li style="font-size: 19px; margin-bottom: 20px;"><strong style="color: #F8FAFC; display:block; margin-bottom: 5px; font-size: 22px;">2. Spring Security 및 JWT 기반 보안 아키텍처 설계:</strong> 안전한 사용자 인증 및 권한 관리를 위해 토큰 기반의 현대적인 보안 시스템 설계 및 적용</li>
+                    <li style="font-size: 19px; margin-bottom: 0;"><strong style="color: #F8FAFC; display:block; margin-bottom: 5px; font-size: 22px;">3. 이미지 리소스 캐싱 및 아이템 디자인 구현:</strong> 시각적 경험을 높이는 아이템 시스템을 구축하면서도, 캐싱을 통해 리소스 로딩 효율성 최적화</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 1: 사용자 및 보안 -->
+    <div class="slide-container" id="slide_jihoon_1">
+        <h2 class="slide-title">1. 사용자 및 보안 시스템</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-user-lock" style="font-size: 150px; color: #FBBF24; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">User & Security</h3>
+                </div>
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #FBBF24;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">소셜 로그인 및 회원가입:</strong> 카카오 소셜 로그인 API 연동 및 유저 친화적 프론트엔드 플로우 구축</li>
+                        <li><strong style="color: #F8FAFC;">보안 아키텍처:</strong> Spring Security & JWT 기반 안전한 토큰 보안 아키텍처 설계 및 인가 적용</li>
+                        <li><strong style="color: #F8FAFC;">유저 통계 및 상세 정보:</strong> 사용자 활동 기반 누적 통계 지표 및 마이페이지 상세 API 구현</li>
+                        <li><strong style="color: #F8FAFC;">게시글 통합 신고 연동:</strong> 게시글, 댓글 등 콘텐츠 대상 중복 신고 여부 조회를 포함한 안전망 구축</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 2: 지도 및 공공 데이터 -->
+    <div class="slide-container" id="slide_jihoon_2">
+        <h2 class="slide-title">2. 지도 및 공공 데이터 활용</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center; grid-template-columns: 1.3fr 0.7fr;">
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #60A5FA;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">서울맵 & 테마 연동:</strong> 서울시 공공 데이터 생태계를 활용한 제로웨이스트/분리수거 테마 렌더링</li>
+                        <li><strong style="color: #F8FAFC;">위치 기반 콘텐츠:</strong> 네이버 지도 API와 융합하여 실시간 내 주변 환경 정보 추천 알고리즘 작성</li>
+                        <li><strong style="color: #F8FAFC;">스마트 길찾기:</strong> <span style="color: #94A3B8;">ODsay / ORS</span> 등 모빌리티 API를 연동한 대중교통, 도보, 자전거 경로 통합 제공</li>
+                        <li><strong style="color: #F8FAFC;">기상청 날씨 연동:</strong> 외출 전 기상 여건을 체크할 수 있는 실시간 날씨 데이터 실시간 제공</li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-map-location-dot" style="font-size: 150px; color: #60A5FA; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Map & Public Data</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 3: 아이템 및 상점 시스템 -->
+    <div class="slide-container" id="slide_jihoon_3">
+        <h2 class="slide-title">3. 아이템 및 상점(경제) 시스템</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-gift" style="font-size: 150px; color: #34D399; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Eco Shop & Item</h3>
+                </div>
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #34D399;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">반응형 지갑 & 트랜잭션:</strong> 보유 포인트(State) 실시간 반영 처리 및 상품 구매 비관적 락 안전 트랜잭션 관리</li>
+                        <li><strong style="color: #F8FAFC;">랜덤 가챠(Gacha):</strong> 재화 소모의 재미를 유발하는 확률형 등급 아이템 뽑기 로직 작성</li>
+                        <li><strong style="color: #F8FAFC;">인벤토리 및 장착 시스템:</strong> 획득 아이템을 내 인벤토리에 보관 후 프로필 연동을 지원하는 해제/장착 처리</li>
+                        <li><strong style="color: #F8FAFC;">리소스 최적화 & 시각화:</strong> 이미지 데이터 캐싱으로 로딩 속도를 높이고, 등급별 화려한 효과 렌더링</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 4: 커뮤니티 및 UI/UX -->
+    <div class="slide-container" id="slide_jihoon_4">
+        <h2 class="slide-title">4. 커뮤니티 모듈 & 기반 UI/UX 구축</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center; grid-template-columns: 1.3fr 0.7fr;">
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #F87171;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">EcoShop 리뷰 관리:</strong> 상품 평가 작성을 위한 조회, 작성, 수정, 삭제 등 완벽한 CRUD 컴포넌트 병렬 연동 구현</li>
+                        <li><strong style="color: #F8FAFC;">선언적 컴포넌트화:</strong> 커스텀 모달, 전역 버튼, 헤더 레이아웃, 달력 등 프로젝트 전반에서 재사용 가능한 핵심 모듈 제작</li>
+                        <li><strong style="color: #F8FAFC;">세션 상태 기반 데이터 로깅:</strong> 마커 상세 보기 클릭 시 해당 정보를 DB에 직접 저장하여 데이터 무결성 체크 및 추적 보조 로직 구현</li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-brands fa-react" style="font-size: 150px; color: #F87171; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">UI/UX & Components</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Jihoon Code Review 1: UI Normalization & State -->
+    <div class="slide-container scrollable-slide" id="slide_jihoon_code1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: Normalization & State</h2>
+        <div class="content-area" style="overflow: visible;">
+            <div class="two-column" style="align-items: center; grid-template-columns: 1.15fr 0.85fr;">
+                <div class="code-block" style="white-space: pre; font-size: 11px; line-height: 1.4; padding: 15px;">
+<span class="code-comment">// 서버의 서로 다른 필드명을 공통 규격으로 맞춤 (정규화)</span> 
+<span class="code-keyword">const</span> itemCategory = (item.itemCategory || item.category || <span class="code-string">"BADGE"</span>).toUpperCase();
+
+<span class="code-comment">// 보유 여부 확인 로직</span>
+<span class="code-keyword">const</span> isOwned = myItems.includes(String(item.itemId || item.ITEM_ID)); 
+
+<span class="code-comment">// 조건부 렌더링: 상태(isOwned)에 따른 버튼 변화</span>
+&lt;div className={styles.cardFooter}&gt;
+  {isOwned ? ( 
+    <span class="code-comment">// 상태 1: 보유 중일 때</span> 
+    &lt;span className={styles.ownedLabel}&gt;보유 중&lt;/span&gt; 
+  ) : ( 
+    <span class="code-comment">// 상태 2: 미보유 시 등급별 처리 (비매품 여부 확인)</span>
+    &lt;&gt; 
+      &lt;span className={styles.priceTag}&gt; 
+        {rarityLower === <span class="code-string">'legendary'</span> ? <span class="code-string">'비매품'</span> : <span class="code-string">`${item.price} P`</span>} 
+      &lt;/span&gt; 
+      {rarityLower !== <span class="code-string">'legendary'</span> && ( 
+        &lt;Button onClick={() =&gt; handleBuy(item)}&gt;구매&lt;/Button&gt; 
+      )} 
+    &lt;/&gt; 
+  )} 
+&lt;/div&gt;
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(52, 211, 153, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(52, 211, 153, 0.3);">
+                        <h3 style="color: #34D399; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 13px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">데이터 정규화 (Normalization):</strong>상점(ShopPage)과 인벤토리(InventoryPage)에서 서버 데이터 필드명이 다르더라도(<code style="color: #A7F3D0;">itemCategory</code> vs <code style="color: #A7F3D0;">category</code>) 렌더링 직전에 정규화하여 공통 컴포넌트가 일관된 인터페이스로 동작하게 했습니다.<br><span style="color: #6EE7B7; font-size: 13px; display: inline-block; margin-top: 5px;">➔ 리액트에서 데이터 흐름을 단방향으로 관리할 때 매우 효율적입니다.</span></li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">상태 기반 동기화 (State Sync):</strong>사용자 보유 상태(<code style="color: #A7F3D0;">isOwned</code>)를 관리하여, 버튼이 '구매'에서 '보유 중'으로 즉각적으로 반영됩니다. 조건부 렌더링은 리액트의 가장 강력한 특징 중 하나인 리액트 상태에 기반한 능동적 UI 동기화를 단적으로 보여줍니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Jihoon Code Review 1-2: ItemCssPreview Component (Part 1/2) -->
+    <div class="slide-container" id="slide_jihoon_code1_preview_1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: ItemCssPreview (1/2)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11px; line-height: 1.35; padding: 15px; width: 100%; box-sizing: border-box; flex-grow: 1; overflow-y: hidden;">
+<span class="code-comment">// ItemCssPreview.js 핵심 선언부</span>
+<span class="code-keyword">const</span> <span class="code-method">ItemCssPreview</span> = ({ item }) =&gt; {
+  <span class="code-comment">// 1. 데이터 정규화 및 상/하케이스 통일</span>
+  <span class="code-keyword">const</span> category = (item.itemCategory || item.category || <span class="code-string">""</span>).toUpperCase();
+  <span class="code-keyword">const</span> rarity = (item.rarity || <span class="code-string">"common"</span>).toLowerCase();
+  
+  <span class="code-comment">// 2. 아이템 ID를 기반으로 프리셋에서 컬러 추출</span>
+  <span class="code-keyword">const</span> itemIdNum = item.itemId || item.ITEM_ID; 
+  <span class="code-keyword">const</span> preset = rarityList[(itemIdNum - 1) % rarityList.length];
+  
+  <span class="code-comment">// 3. CSS 변수(--var) 동적 주입 준비</span>
+  <span class="code-keyword">const</span> styleVars = {
+    <span class="code-string">"--g1"</span>: preset.g1, <span class="code-string">"--g2"</span>: preset.g2, <span class="code-string">"--ring"</span>: preset.ring,
+  };
+
+  <span class="code-keyword">return</span> (
+    &lt;div className={<span class="code-string">`fx-badge-card rarity-${rarity}`</span>} style={styleVars}&gt;
+      {category === <span class="code-string">"BACKGROUND"</span> && (
+        &lt;&gt;
+          &lt;div className=<span class="code-string">"fx-glow"</span> /&gt;
+          {(rarity === <span class="code-string">"legendary"</span> || rarity === <span class="code-string">"epic"</span>) && &lt;div className=<span class="code-string">"fx-ring"</span> /&gt;}
+        &lt;/&gt;
+      )}
+    &lt;/div&gt;
+  );
+};
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(251, 191, 36, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(251, 191, 36, 0.3);">
+                        <h3 style="color: #FBBF24; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 13px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.5;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">선언적 UI 구조:</strong> 뱃지, 칭호, 배경을 개별 구현하지 않고 공통 컴포넌트로 묶었습니다.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.5;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">CSS 변수 주입:</strong> 리액트에서 <code style="color: #FBBF24;">--var</code>만 주입하여 로직과 스타일을 명확히 분리했습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Jihoon Code Review 1-2: ItemCssPreview Component (Part 2/2) -->
+    <div class="slide-container" id="slide_jihoon_code1_preview_2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: ItemCssPreview (2/2)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.1fr 0.9fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11px; line-height: 1.35; padding: 15px; width: 100%; box-sizing: border-box; flex-grow: 1; overflow-y: hidden;">
+<span class="code-comment">// 1. profileBackgrounds.js (스타일 데이터 분리 관리)</span>
+{ id: <span class="code-number">1</span>, g1: <span class="code-string">"rgba(20,45,35,0.85)"</span>, ring: <span class="code-string">"rgba(120,200,160,0.3)"</span> },
+{ id: <span class="code-number">22</span>, g1: <span class="code-string">"rgba(60,20,80,0.9)"</span>, ring: <span class="code-string">"rgba(200,100,255,0.4)"</span> },
+
+<span class="code-comment">// 2. itemEffects.css (글로벌 애니메이션)</span>
+<span class="code-keyword">.fx-glow</span> {
+  <span class="code-comment">/* JS에서 주입된 --ring 변수 활용 */</span>
+  background: radial-gradient(circle, <span class="code-number">var(--ring)</span> 0%, transparent 70%);
+  animation: pulse 3s infinite;
+}
+<span class="code-keyword">.fx-ring</span> {
+  border: 1px solid <span class="code-number">var(--ring)</span>;
+  box-shadow: 0 0 15px <span class="code-number">var(--ring)</span>;
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(251, 191, 36, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(251, 191, 36, 0.3);">
+                        <h3 style="color: #FBBF24; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>CSS Point</h3>
+                        <ul class="styled-list" style="font-size: 13px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.5;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">애니메이션 추상화:</strong> 모든 아이템이 동일한 CSS 클래스를 공유하며 데이터에 따라 색상만 다르게 표현됩니다.</li>
+                            <li style="margin-bottom: 0px; font-size: 14px; line-height: 1.5;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">데이터 기반 스타일:</strong> DB 인덱스번호(itemId)와 리스트를 매칭하여 중앙화된 관리가 가능합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Jihoon Code Review 2: Component Composition & Rendering -->
+    <div class="slide-container scrollable-slide" id="slide_jihoon_code2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: Component Composition</h2>
+        <div class="content-area" style="overflow: visible;">
+            <div class="two-column" style="grid-template-columns: 1.15fr 0.85fr; gap: 30px; align-items: start;">
+                <div class="code-block" style="white-space: pre; font-size: 11px; line-height: 1.4; padding: 15px;">
+<span class="code-keyword">MapModal.js </span>(최상위 컨테이너)
+<span class="code-keyword">import</span> axios <span class="code-keyword">from</span> <span class="code-string">"axios"</span>;
+<span class="code-keyword">import</span> { memo, useEffect, useState } <span class="code-keyword">from</span> <span class="code-string">"react"</span>;
+<span class="code-keyword">import</span> routeApi <span class="code-keyword">from</span> <span class="code-string">"../../apis/routeApi"</span>;
+<span class="code-keyword">import</span> Button <span class="code-keyword">from</span> <span class="code-string">"../common/Button"</span>;
+<span class="code-keyword">import</span> CustomModal <span class="code-keyword">from</span> <span class="code-string">"../common/CustomModal"</span>;
+<span class="code-keyword">import</span> KeywordTags <span class="code-keyword">from</span> <span class="code-string">"./KeywordTags"</span>;
+<span class="code-keyword">import</span> styles <span class="code-keyword">from</span> <span class="code-string">"./MapModal.module.css"</span>;
+<span class="code-keyword">import</span> ReviewList <span class="code-keyword">from</span> <span class="code-string">"./ReviewList"</span>; <span class="code-comment">// 하위 핵심 컴포넌트</span>
+
+<span class="code-keyword">ReviewList.js </span>(도메인별 분리)
+<span class="code-keyword">import</span> Profile <span class="code-keyword">from</span> <span class="code-string">"../common/Profile"</span>;           <span class="code-comment">// 공통 유저 정보</span>
+<span class="code-keyword">import</span> ReviewFormModal <span class="code-keyword">from</span> <span class="code-string">"./ReviewFormModal"</span>;     <span class="code-comment">// 작성/수정 폼</span>
+<span class="code-keyword">import</span> ReportModal <span class="code-keyword">from</span> <span class="code-string">"../common/ReportModal"</span>;     <span class="code-comment">// 신고 기능</span>
+<span class="code-keyword">import</span> UserDetailModal <span class="code-keyword">from</span> <span class="code-string">"../common/UserDatailModal"</span>; <span class="code-comment">// 상세 팝업</span>
+<span class="code-keyword">import</span> CustomModal <span class="code-keyword">from</span> <span class="code-string">"../common/CustomModal"</span>;     <span class="code-comment">// 전역 알림</span>
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(248, 113, 113, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(248, 113, 113, 0.3); display: flex; align-items: flex-start; flex-direction: column;">
+                        <h3 style="color: #F87171; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 13px; width: 100%;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">컴포넌트 조립(Composition)을 통한 가독성:</strong> 방대한 리뷰(작성/신고/조회 등) 로직을 한 파일에 넣지 않고, 각자의 관심사를 가진 작은 컴포넌트를 조립하여 복잡도를 낮췄습니다.</li>
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">계층에 따른 관심사 분리(SoC):</strong> 최상위 MapModal은 장소 맥락 관리, ReviewList는 인터랙션, 하위 모달(Report 등)은 해당 액션에만 집중하여 유지보수성을 극대화합니다.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">도메인별 컴포넌트 재사용성:</strong> 동일한 FormModal이 작성과 수정 역할을 모두 수행하며, CustomModal 등은 전역에서 단 몇 줄의 Import 만으로 표준화된 알림을 표출합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- [Member] Kim Jaehyung Section: Member Mgmt -->
+    <div class="slide-container" id="member_title_jaehyung">
+        <div class="content-area" style="align-items: center;">
+            <div class="memo-card" style="border-left-color: #FBBF24;">
+                <div class="memo-header">
+                   <span class="role-tag" style="background: #FBBF24;">Back-end Developer</span>
+                   <h2 class="memo-name">김재형</h2>
+                   <div class="memo-title">멤버 서비스 / 인증 라이프사이클 구현</div>
+                </div>
+                <ul class="memo-list">
+                    <li>회원 가입 및 로그인/로그아웃 핵심 비즈니스 로직 개발</li>
+                    <li>유저 프로필 관리 및 가상 계정 정보 동기화 처리</li>
+                    <li>데이터 보존을 고려한 Soft Withdrawal(탈퇴) 시스템 구축</li>
+                    <li>회원 정보 유효성 검증 및 예외 처리 프로세스 최적화</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 1: 멤버 서비스 & 인증 관리 -->
+    <div class="slide-container" id="slide_jaehyung_1">
+        <h2 class="slide-title">1. 멤버 서비스 & 인증 관리</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-user-shield" style="font-size: 150px; color: #FBBF24; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Auth & Lifecycle</h3>
+                </div>
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #FBBF24;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">인증 라이프사이클 설계:</strong> 회원가입부터 로그인, 로그아웃에 이르는 사용자 인증의 전 과정을 RESTful API로 설계하고 핵심 비즈니스 로직을 구현함.</li>
+                        <li><strong style="color: #F8FAFC;">보안 강화 및 암호화:</strong> BCryptPasswordEncoder를 활용한 비밀번호 암호화와 JWT(JSON Web Token) 기반의 무상태(Stateless) 인증 체계를 구축하여 보안성 확보.</li>
+                        <li><strong style="color: #F8FAFC;">유효성 검증 및 상태 관리:</strong> 중복 아이디 체크, 필수값 검증, 온라인 상태 실시간 업데이트(0: 오프라인, 1: 온라인) 로직을 통해 사용자 데이터의 신뢰도 향상.</li>
+                        <li><strong style="color: #F8FAFC;">Soft Withdrawal(논리 삭제) 시스템:</strong> 회원 탈퇴 시 데이터를 즉시 삭제하지 않고 상태값 변경을 통해 관리함으로써 데이터 무결성 및 사후 복구 가능성 고려.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 2: 인증 시스템 및 회원 관리 로직 -->
+    <div class="slide-container" id="slide_jaehyung_2">
+        <h2 class="slide-title">2. 인증 시스템 및 회원 관리 로직</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center; grid-template-columns: 1.3fr 0.7fr;">
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #34D399;">
+                    <div style="color: #34D399; font-weight: bold; margin-bottom: 15px; font-size: 20px;"><i class="fa-brands fa-java" style="margin-right: 8px;"></i>MemberController.java / MemberServiceImpl.java</div>
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">JWT 기반 로그인 프로세스:</strong> 로그인 성공 시 사용자 고유 식별자를 포함한 토큰을 생성하여 반환하고, 클라이언트 측에서 인증 상태를 유지할 수 있도록 설계함.</li>
+                        <li><strong style="color: #F8FAFC;">임시 비밀번호 발급 로직:</strong> 비밀번호 분실 시 UUID를 활용한 임시 비밀번호 생성 및 암호화 업데이트 로직을 구현하여 사용자 계정 복구 기능 제공.</li>
+                        <li><strong style="color: #F8FAFC;">포인트 및 아이템 연동:</strong> 회원의 보유 포인트 조회와 장착 중인 아이템 리스트를 연동하여 멤버 상세 정보 페이지의 동적 데이터 제공.</li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-id-card" style="font-size: 150px; color: #34D399; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Member Management</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 3: 데이터 유효성 및 예외 처리 프로세스 -->
+    <div class="slide-container" id="slide_jaehyung_3">
+        <h2 class="slide-title">3. 데이터 유효성 및 예외 처리 프로세스</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-server" style="font-size: 150px; color: #60A5FA; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Exception Handling</h3>
+                </div>
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #60A5FA;">
+                    <div style="color: #60A5FA; font-weight: bold; margin-bottom: 15px; font-size: 20px;"><i class="fa-brands fa-java" style="margin-right: 8px;"></i>MemberController.java</div>
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">정밀한 HTTP 응답 처리:</strong> ResponseEntity를 활용하여 성공(201 Created, 200 OK)과 실패(401 Unauthorized, 500 Error) 상황에 맞는 정확한 상태 코드와 메시지 반환.</li>
+                        <li><strong style="color: #F8FAFC;">로그 기반 에러 트래킹:</strong> @Slf4j를 활용하여 로그인 실패, 비밀번호 찾기 시도, 탈퇴 실패 등 주요 이벤트 발생 시 로그를 남겨 시스템 모니터링 및 디버깅 효율화.</li>
+                        <li><strong style="color: #F8FAFC;">RESTful 메서드 준수:</strong> 가입(POST), 수정(PUT), 탈퇴(DELETE), 조회(GET) 등 기능에 맞는 HTTP Method를 엄격히 준수하여 API 규격화.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Code Review (Jaehyung) -->
+    <div class="slide-container" id="slide_jaehyung_code1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: 회원 가입 및 JWT 로그인 로직</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.15fr 0.85fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 10.5px; line-height: 1.35; padding: 15px; width: 100%; box-sizing: border-box; flex-grow: 1; overflow-y: hidden;">
+<span class="code-comment">// 1. 회원 가입 시 비밀번호 암호화 및 필수값 검증</span>
+<span class="code-annotation">@PostMapping</span>(<span class="code-string">"/join"</span>)
+<span class="code-keyword">public</span> ResponseEntity&lt;?&gt; <span class="code-method">insertMember</span>(<span class="code-annotation">@RequestBody</span> MemberVO m){
+    <span class="code-keyword">if</span>(m.getLoginId() == <span class="code-keyword">null</span> || m.getPassword() == <span class="code-keyword">null</span>) {
+        <span class="code-keyword">return</span> ResponseEntity.badRequest().body(<span class="code-string">"아이디와 비밀번호는 필수입니다."</span>);
+    }
+    m.setPassword(bcrypt.encode(m.getPassword())); <span class="code-comment">// 암호화 처리</span>
+    <span class="code-keyword">int</span> result = service.insertMember(m);
+    <span class="code-keyword">return</span> result &gt; <span class="code-number">0</span> ? ResponseEntity.status(HttpStatus.CREATED).body(<span class="code-string">"가입 성공"</span>) 
+                      : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(<span class="code-string">"가입 실패"</span>);
+}
+
+<span class="code-comment">// 2. JWT 기반 보안 로그인 로직</span>
+<span class="code-annotation">@PostMapping</span>(<span class="code-string">"/login"</span>)
+<span class="code-keyword">public</span> ResponseEntity&lt;?&gt; <span class="code-method">loginMember</span>(<span class="code-annotation">@RequestBody</span> MemberVO m) {
+    MemberVO loginMember = service.loginMember(m);
+    <span class="code-keyword">if</span> (loginMember == <span class="code-keyword">null</span> || !bcrypt.matches(m.getPassword(), loginMember.getPassword())) {
+        <span class="code-keyword">return</span> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(<span class="code-string">"인증 실패"</span>);
+    }
+    String token = jwtUtil.generateToken(loginMember.getLoginId()); <span class="code-comment">// 토큰 생성</span>
+    loginMember.setPassword(<span class="code-keyword">null</span>); <span class="code-comment">// 보안을 위해 비번 필드 제거</span>
+    
+    HashMap&lt;String, Object&gt; map = <span class="code-keyword">new</span> HashMap&lt;&gt;();
+    map.put(<span class="code-string">"token"</span>, token);
+    map.put(<span class="code-string">"user"</span>, loginMember);
+    <span class="code-keyword">return</span> ResponseEntity.ok(map);
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(251, 191, 36, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(251, 191, 36, 0.3);">
+                        <h3 style="color: #FBBF24; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 13px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">엄격한 예외 처리:</strong>가입 필수값 누락과 가입 실패 시 <code>ResponseEntity</code>를 통하여 명시적인 HTTP 상태코드를 반환해 클라이언트 오류 인식을 명확히 함.</li>
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">안전한 단방향 암호화:</strong><code>bcrypt.encode</code> 와 <code>matches</code> 메서드를 이용하여 내부 데이터를 암호화 방어 처리. 로그인 성공 시에도 클라이언트 반환 직전 객체의 비밀번호 필드를 <code>null</code>로 변경하여 정보 노출을 완벽 통제함.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">JWT 보안 토큰 설계:</strong>세션에 의존하지 않고 서버 사이드의 상태를 유지하지 않는 Stateless 기반 인증 체계를 사용하여 확장성에 유리.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- [Member] Kim Jihwan Section: Chat, AI -->
+    <div class="slide-container" id="slide6">
+        <div class="content-area" style="align-items: center;">
+            <div class="memo-card" style="border-left-color: #34D399;">
+                <div class="memo-header">
+                   <span class="role-tag">Full-stack Developer</span>
+                   <h2 class="memo-name">김지환</h2>
+                   <div class="memo-title">채팅 인프라 / 지능형 AI 가이드 구현</div>
+                </div>
+                <ul class="memo-list">
+                    <li>STOMP 프로토콜 기반 실시간 양방향 채팅 인프라 구축</li>
+                    <li>스프링 캐시(Spring Cache) 시스템 도입을 통한 대규모 데이터 조회 속도 최적화</li>
+                    <li>트랜잭션 이벤트 리스너를 통한 완벽한 데이터 정합성 유지</li>
+                    <li>체계적인 웹소켓 메시지 타입 설계를 통한 다양한 형태의 실시간 데이터 제어</li>
+                    <li>글로벌 뉴스·실시간 날씨 외부 API 연동 및 Gemini를 통한 데이터 가공 파이프라인 구축</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 20:, 8, 9: Chat Tech -->
+    <div class="slide-container" id="slide7">
+        <h2 class="slide-title">Chat Architecture: STOMP & WebSocket</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="background:#132A1E; padding:40px; border-radius:24px; border-left: 5px solid #34D399;">
+                    <h3 style="color:#34D399; margin-bottom:20px;">Real-time Communication</h3>
+                    <ul class="styled-list">
+                        <li><strong style="color:#FBBF24;">메시지 파싱 자동화:</strong> STOMP 커맨드(CONNECT, SEND) 적용으로 직렬화·역직렬화 구현 비용 제거.</li>
+                        <li><strong style="color:#FBBF24;">내장 브로커 Pub/Sub:</strong> <code>/app</code>(발신), <code>/topic</code>(수신) 라우팅을 통하여 다중 채팅방 관리 로직 간소화.</li>
+                        <li><strong style="color:#FBBF24;">Spring 생태계 융합:</strong> <code>@MessageMapping</code> 컨트롤러 유지 및 웹소켓 인터셉터로 토큰 위변조 원천 차단.</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <i class="fa-solid fa-network-wired" style="font-size: 180px; color: #34D399; opacity: 0.2;"></i>
+                    <p style="margin-top:20px; color:#A7F3D0;">End-to-End Real-time Sync</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide8">
+        <h2 class="slide-title">Chat Backbone: JPA & Persistence</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align:center;">
+                    <i class="fa-solid fa-database" style="font-size: 180px; color: #10B981; opacity: 0.2;"></i>
+                    <p style="margin-top:20px; color:#A7F3D0;">Relational Data Integrity</p>
+                </div>
+                <div style="background:#132A1E; padding:40px; border-radius:24px; border-left: 5px solid #10B981;">
+                    <h3 style="color:#10B981; margin-bottom:20px;">Data Modeling Strategy</h3>
+                    <ul class="styled-list">
+                        <li><strong style="color:#A7F3D0;">Entity Lifecycle:</strong> <code>ChatRoom</code>, <code>ChatMessage</code> 등 복잡한 N:M 관계 매핑 해결.</li>
+                        <li><strong style="color:#A7F3D0;">결합성 캐싱(Spring Cache):</strong> 잦은 단건 조회가 발생하는 회원 프로필 등의 정적 데이터를 캐싱하여 DB 직결 부하(I/O)를 최소화하고 실시간 조회 성능을 극대화.</li>
+                        <li><strong style="color:#A7F3D0;">Transactional Event:</strong> DB 커밋 완료 후 웹소켓 방송을 실행하여 정합성 보장.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Slide 23: AI Gemini (AI Tech) -->
+    <div class="slide-container" id="slide14">
+        <h2 class="slide-title">지능형 가이드: AI Integration</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items:center;">
+                <div>
+                    <div style="background:#064E3B; padding:15px 30px; border-radius:15px; display:inline-block; margin-bottom:20px;">
+                        <span style="font-family:'Montserrat'; font-weight:bold; color:#A7F3D0;">POWERED BY Google Gemini</span>
+                    </div>
+                    <h3>Intelligent Data Processing</h3>
+                    <p>뉴욕 타임즈의 글로벌 환경 뉴스(XML)를 수신하여, JSON 형식으로 파싱하고 Gemini API를 통해 한국어로 신속하게 번역 및 요약하는 무중단 파이프라인을 구축했습니다.</p>
+                    <p style="margin-top:15px;">또한 공공데이터 포털의 날씨 정보를 기반으로 현재 기상 상태에 적합한 1:1 맞춤형 인사 멘트를 추천합니다.</p>
+                    <p style="margin-top:15px; color:#FBBF24; font-weight:600;">※ AI 할루시네이션(환각)을 방지하기 위해, 단순 프롬프트 질의가 아닌 검증된 '원본 데이터(Data Source)'를 AI에게 제공함으로써 답변의 신뢰성과 안정성을 극대화했습니다.</p>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-brain" style="font-size: 150px; color: #A7F3D0; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC; text-align: center;">AI & Data Pipeline</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 24-1: Code Review (Jihwan's Backend STOMP Config - Part 1) -->
+    <div class="slide-container" id="slide14_code_review_1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: STOMP Endpoints 설정</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre; font-size: 11.5px; line-height: 1.4; padding: 15px; width: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// WebSocketConfig.java - registerStompEndpoints</span>
+<span class="code-annotation">@Override</span>
+<span class="code-keyword">public void</span> <span class="code-method">registerStompEndpoints</span>(StompEndpointRegistry registry) {
+    <span class="code-comment">// 1. WebSocket 접속 엔드포인트 설정 (/ws-chat)</span>
+    registry.addEndpoint(<span class="code-string">"/ws-chat"</span>)
+            .setAllowedOriginPatterns(<span class="code-string">"*"</span>); <span class="code-comment">// 모든 도메인 허용 (CORS)</span>
+
+    <span class="code-comment">// 2. 구형 브라우저 대응을 위한 SockJS 설정</span>
+    registry.addEndpoint(<span class="code-string">"/ws-chat"</span>)
+            .setAllowedOriginPatterns(<span class="code-string">"*"</span>)
+            .withSockJS();
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(52, 211, 153, 0.1); padding: 25px; border-radius: 20px; border: 1px solid rgba(52, 211, 153, 0.3);">
+                        <h3 style="color: #34D399; font-size: 22px; margin-bottom: 15px;">Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li><strong style="color: #F8FAFC;">SockJS Fallback:</strong> 방화벽 등 네트워크 제약으로 WebSocket 연결 실패 시 HTTP 풀링 자동 우회.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 24-2: Code Review (Jihwan's Backend STOMP Config - Part 2) -->
+    <div class="slide-container" id="slide14_code_review_2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: Message Broker 설정</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre; font-size: 11.5px; line-height: 1.4; padding: 15px; width: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// WebSocketConfig.java - configureMessageBroker</span>
+<span class="code-annotation">@Override</span>
+<span class="code-keyword">public void</span> <span class="code-method">configureMessageBroker</span>(MessageBrokerRegistry registry) {
+    <span class="code-comment">// [구독: Sub] 서버 -> 클라이언트 전송용 prefix</span>
+    registry.enableSimpleBroker(<span class="code-string">"/topic"</span>, <span class="code-string">"/queue"</span>);
+
+    <span class="code-comment">// [발행: Pub] 클라이언트 -> 서버 전송용 prefix (Controller 전달)</span>
+    registry.setApplicationDestinationPrefixes(<span class="code-string">"/app"</span>);
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(52, 211, 153, 0.1); padding: 25px; border-radius: 20px; border: 1px solid rgba(52, 211, 153, 0.3);">
+                        <h3 style="color: #34D399; font-size: 22px; margin-bottom: 15px;">Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li><strong style="color: #F8FAFC;">라우팅 구조화:</strong> <code>/app</code>은 제어 계층으로, <code>/topic</code>은 전파 계층으로 명확히 분리하여 무결성 확보.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 25:-3: Code Review (Jihwan's Frontend STOMP - 1) -->
+    <div class="slide-container scrollable-slide" id="slide14_code_review_front1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">프론트엔드 코드 리뷰: STOMP 전역 연결 (ChatContext)</h2>
+        <div class="content-area" style="overflow: visible;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start;">
+                <div class="code-block" style="white-space: pre; font-size: 11.5px; line-height: 1.5; padding: 15px;">
+<span class="code-comment">// ChatContext.jsx</span>
+<span class="code-keyword">import</span> { Client } <span class="code-keyword">from</span> <span class="code-string">'@stomp/stompjs'</span>;
+
+<span class="code-keyword">const</span> token = <span class="code-method">localStorage</span>.getItem(<span class="code-string">'token'</span>);
+<span class="code-keyword">const</span> stompClient = <span class="code-keyword">new</span> <span class="code-type">Client</span>({
+  brokerURL: <span class="code-string">'ws://localhost:8080/spring/ws-chat'</span>, <span class="code-comment">// 서버 엔드포인트</span>
+  connectHeaders: { Authorization: token ? <span class="code-string">`Bearer ${token}`</span> : <span class="code-string">''</span> },
+  reconnectDelay: <span class="code-number">5000</span>, <span class="code-comment">// 자동 재연결</span>
+  
+  onConnect: () => {
+    setConnected(<span class="code-keyword">true</span>);
+<span class="code-highlight">    <span class="code-comment">// 1. 개인 채널 구독 (나만의 전역 이벤트 수신기)</span>
+    <span class="code-comment">// - 타 화면에서 내 채팅방 목록(CHAT_LIST_REFRESH) 수신 시 글로벌 뱃지 실시간 동기화</span>
+    <span class="code-comment">// - 새 메시지가 왔을 때 타 화면에 있는 나를 정확히 타겟팅한 알람 팝업 렌더링</span>
+    <span class="code-comment">// - 상대방 프로필 변경(PROFILE_UPDATE) 및 방 강제 퇴장(KICK), 서버 예외 로그 실시간 수신</span>
+    stompClient.subscribe(<span class="code-string">`/topic/user/${user.memberId}`</span>, (message) => {
+      <span class="code-keyword">const</span> notification = JSON.parse(message.body);
+      <span class="code-comment">// 각종 시스템 제어 신호 수신 시 글로벌 뱃지 갱신 및 UI 업데이트</span>
+      <span class="code-keyword">if</span>(notification.type === <span class="code-string">'NOTICE'</span>) {
+          toast.info(notification.content, { position: <span class="code-string">"top-right"</span> });
+          setGlobalUnread(prev => prev + <span class="code-number">1</span>);
+      }
+    });</span>
+  }
+});
+stompClient.activate(); <span class="code-comment">// 터널 개통</span>
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(96, 165, 250, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(96, 165, 250, 0.3);">
+                        <h3 style="color: #60A5FA; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">전역 터널 통일 및 상태 공급 (Provider):</strong>채팅방마다 소켓을 열지 않고 터널을 1개만 유지합니다. 이 Context는 하위 컴포넌트들에게 <b>① STOMP 통신 객체(client) ② 통신 상태(connected) ③ 내 채팅방 목록(chatRooms) ④ 전체 안 읽은 개수(totalUnreadCount)</b>를 최상단에서 실시간으로 흩뿌려주는(Provide) 핵심 심장 역할을 합니다.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">어디서든 수신 가능한 개인 채널:</strong>터널 개통 즉시 내 고유 경로(<code>/topic/user/id</code>)를 구독합니다. 이를 통해 내가 다른 탭에 있더라도 <b>1) 누군가 내게 메시지를 보냈을 때의 목록 갱신(CHAT_LIST_REFRESH) 2) 전역 새 알림(NOTICE) 3) 일괄 프로필 갱신 정보 4) 서버 예외 및 강퇴(KICK)</b> 신호를 유실 없이 낚아채서 실시간 UI (글로벌 뱃지 카운트 등)에 반영합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 26:-4: Code Review (Jihwan's Frontend STOMP - 2) -->
+    <div class="slide-container scrollable-slide" id="slide14_code_review_front2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">프론트엔드 코드 리뷰: 채팅방 구독 (Subscribe)</h2>
+        <div class="content-area" style="overflow: visible;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start;">
+                <div class="code-block" style="white-space: pre; font-size: 11.5px; line-height: 1.5; padding: 15px;">
+<span class="code-comment">// ChatRoomDetail.jsx - useEffect</span>
+<span class="code-highlight"><span class="code-comment">// 2. 현재 입장한 채팅방 전용 채널 구독 설정</span>
+<span class="code-keyword">const</span> roomSubscription = client.subscribe(<span class="code-string">`/topic/chat/room/${roomId}`</span>, (message) => {
+    <span class="code-keyword">const</span> receivedMsg = JSON.parse(message.body);</span>
+    
+    <span class="code-comment">// 각종 방 제어 이벤트 (제목 변경, 멤버 퇴장 등) 처리</span>
+    <span class="code-keyword">if</span> (receivedMsg.type === <span class="code-string">'ROOM_UPDATE'</span>) { <span class="code-comment">/* 뷰 갱신 후 */</span> <span class="code-keyword">return</span>; }
+
+    <span class="code-comment">// 채팅 메시지인 경우: 로컬 메시지 배열 스테이트에 업데이트</span>
+    setMessages(prev => {
+        <span class="code-keyword">let</span> updatedMessages = [...prev];
+        updatedMessages.push({ ...receivedMsg, localId: receivedMsg.messageId });
+        <span class="code-keyword">return</span> updatedMessages;
+    });
+
+    <span class="code-comment">// 상대가 보낸 메시지라면 즉각 읽음 처리 동기화</span>
+    <span class="code-keyword">if</span> (receivedMsg.senderId !== user.memberId) {
+        markAsRead(roomId, user.memberId, receivedMsg.messageId);
+    }
+});
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(167, 243, 208, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(167, 243, 208, 0.3);">
+                        <h3 style="color: #A7F3D0; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">초기화와 실시간 동기화의 분리:</strong>방 입장 시 REST API로 초기 과거 채팅 내역을 로드한 뒤, 웹소켓으로는 <b>새 메시지나 방 정보 변동 사항만 실시간으로 로컬 상태(State)에 덧붙이는 구조</b>로 네트워크 트래픽을 아꼈습니다.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">조립형 채팅방 구독 (메모리 최적화):</strong>기존에 뚫어둔 전역 파이프라인 위에 현재 방의 토픽만 조립하듯 구독(Subscribe)합니다. 그리고 이 화면을 벗어나는 순간 즉시 <b>구독을 끊고 로컬 상태를 휘발시켜 메모리 누수를 원천 차단</b>했습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 27: Code Review (Jihwan's Frontend STOMP - Event Routing) -->
+    <div class="slide-container scrollable-slide" id="slide14_code_review_front_routing">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">프론트엔드 코드 리뷰: 메시지 타입(Type) 기반 이벤트 라우팅</h2>
+        <div class="content-area" style="overflow: visible;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start;">
+                <div class="code-block" style="white-space: pre; font-size: 11.5px; line-height: 1.5; padding: 15px;">
+<span class="code-comment">// ChatRoomDetail.jsx - 구독 수신부 로직</span>
+<span class="code-keyword">const</span> roomSubscription = client.subscribe(<span class="code-string">`/topic/chat/room/${roomId}`</span>, (message) => {
+    <span class="code-keyword">const</span> msg = JSON.parse(message.body);
+
+    <span class="code-comment">// [핵심] 단일 통신망 안에서 메시지 Type에 따른 프론트엔드 역할 분기 처리</span>
+    <span class="code-keyword">switch</span> (msg.type) {
+        <span class="code-comment">// 1. 일반 채팅 (Data Layer) -> 로컬 배열 상태 갱신</span>
+        <span class="code-keyword">case</span> <span class="code-string">'TEXT'</span>:
+        <span class="code-keyword">case</span> <span class="code-string">'IMAGE'</span>:  
+            setMessages(prev => [...prev, msg]); 
+            <span class="code-comment">// 상대가 보낸 메시지라면 즉각 읽음 처리 동기화</span>
+            <span class="code-keyword">if</span> (msg.senderId !== user.memberId) markAsRead(msg.messageId);
+            <span class="code-keyword">break</span>;
+
+        <span class="code-comment">// 2. 시스템 안내 멘트 (Notice Layer) -> 화면 상단 공지 렌더링</span>
+        <span class="code-keyword">case</span> <span class="code-string">'SYSTEM'</span>: 
+            setSystemNotice(msg.content); <span class="code-keyword">break</span>;
+
+        <span class="code-comment">// 3. 메시지 삭제 로컬 동기화 (Sync Layer) -> 컴포넌트 실시간 제거</span>
+        <span class="code-keyword">case</span> <span class="code-string">'DELETED'</span>:
+            setMessages(prev => prev.map(m => m.messageId === msg.messageId ? { ...m, isDeleted: <span class="code-keyword">true</span> } : m));
+            <span class="code-keyword">break</span>;
+
+        <span class="code-comment">// 4. 무음 상태 제어 신호 (Control Layer) -> 백그라운드 참여자 목록 갱신</span>
+        <span class="code-keyword">case</span> <span class="code-string">'ROOM_UPDATE'</span>: 
+            fetchRoomMembers(); <span class="code-keyword">break</span>;
+    }</span>
+});
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(167, 243, 208, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(167, 243, 208, 0.3);">
+                        <h3 style="color: #A7F3D0; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">단일 터널 다형성 제어:</strong>단 하나의 채널만을 구독하고, 백엔드 DTO의 <code>type</code> 필드를 식별자로 삼아 <b>일반 채팅, 안내 멘트, 방 제어 등</b> 완전히 다른 성격의 UI/UX 업데이트를 스위칭합니다.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">무음 제어 신호 설계:</b><code>ROOM_UPDATE</code> 타입은 화면에 빈 말풍선을 띄우지 않는 **투명 제어 신호**입니다. 해당 타입 수신 시 백그라운드 API만 찔러 우측 채팅 참여자 목록을 조용히 갱신합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 28:-5: Code Review (Jihwan's Frontend STOMP - 3) -->
+    <div class="slide-container scrollable-slide" id="slide14_code_review_front3">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">프론트엔드 코드 리뷰: 메시지 발송 (Publish)</h2>
+        <div class="content-area" style="overflow: visible;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start;">
+                <div class="code-block" style="white-space: pre; font-size: 11.5px; line-height: 1.5; padding: 15px;">
+<span class="code-comment">// ChatRoomDetail.jsx</span>
+<span class="code-keyword">const</span> handleSend = () => {
+    <span class="code-keyword">const</span> msgDto = { chatRoomId: roomId, senderId, content: input, messageType: <span class="code-string">'TEXT'</span> };
+
+<span class="code-highlight">    <span class="code-comment">// [중요] 낙관적 업데이트 (Optimistic Update)</span>
+    <span class="code-keyword">const</span> tempId = Date.now();
+    <span class="code-keyword">const</span> optimisticMsg = { ...msgDto, messageId: tempId, isOptimistic: <span class="code-keyword">true</span> };
+
+    <span class="code-comment">// 1. 서버 전송 전, 내 화면에 먼저 그리기 (체감속도 단축)</span>
+    setMessages(prev => [...prev, optimisticMsg]);</span>
+
+    <span class="code-keyword">try</span> {
+        <span class="code-comment">// 2. 백엔드 컨트롤러(/app/chat/message)를 향해 발행 (Pub)</span>
+        client.publish({ destination: <span class="code-string">'/app/chat/message'</span>, body: JSON.stringify(msgDto) });
+        setInput(<span class="code-string">''</span>);
+    } <span class="code-keyword">catch</span> (error) {
+        <span class="code-comment">// 전송 실패 시 임시 그려둔 말풍선 제거 롤백</span>
+        setMessages(prev => prev.filter(msg => msg.messageId !== tempId));
+    }
+};
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(251, 191, 36, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(251, 191, 36, 0.3);">
+                        <h3 style="color: #FBBF24; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">메시지 발행 (client.publish):</strong>규격화된 DTO 포맷에 맞추어 송신 데이터를 백엔드 라우팅 경로(<code>/app</code>)로 발사합니다.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">낙관적 업데이트 (Optimistic Update)와 동기화:</strong>서버 응답을 기다리지 않고 임시 ID를 가진 말풍선을 화면에 먼저 렌더링하여 체감 지연(Delay)을 없앴습니다. 이때 임시 객체에 <b><code>isOptimistic: true</code> 플래그</b>를 달아두고, 직후 서버로부터 진짜 messageId가 포함된 웹소켓 응답이 돌아왔을 때 플래그를 추적하여 <b>새 말풍선을 중복 추가하는 대신 진짜 데이터로 덮어씌우는(Replace) 맵핑 동기화 로직</b>을 구현해 무결성을 보장했습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 28:-6: Code Review (Jihwan's Backend Chat Sync - Part 1: Controller) -->
+    <div class="slide-container" id="slide14_code_review_back1_1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">백엔드 코드 리뷰: 실시간 메시지 처리 (Controller)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.45; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// ChatController.java (발행 진입점)</span>
+<span class="code-annotation">@MessageMapping</span>(<span class="code-string">"/chat/message"</span>)
+<span class="code-keyword">public void</span> <span class="code-method">sendMessage</span>(ChatMessageDto messageDto) {
+    <span class="code-keyword">try</span> {
+        <span class="code-comment">// 1. Service 계층 위임: DB 영속성 확보</span>
+        ChatMessageDto savedMessage = chatService.saveMessage(messageDto);
+        
+<span class="code-highlight">        <span class="code-comment">// 2. 해당 방("/topic/chat/room/ID") 구독자에게 방송</span>
+        messagingTemplate.convertAndSend(<span class="code-string">"/topic/chat/room/"</span> + messageDto.getChatRoomId(), savedMessage);</span>
+        
+        <span class="code-comment">// 3. 전역 알림(안읽음 뱃지) 이벤트 발행</span>
+        chatService.sendGlobalNotifications(savedMessage);
+        
+    } <span class="code-keyword">catch</span> (Exception e) {
+        log.error(<span class="code-string">"메시지 전송 중 오류 발생"</span>, e);
+        <span class="code-comment">// [에러 헨들링] 당사자에게만 1:1로 에러 사유 전송</span>
+        messagingTemplate.convertAndSend(<span class="code-string">"/topic/user/"</span> + messageDto.getSenderId(), errorMsg);
+    }
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(96, 165, 250, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(96, 165, 250, 0.3);">
+                        <h3 style="color: #60A5FA; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">실시간 브로드캐스트:</strong> 최신화된 메시지를 즉시 방 전체에 방송합니다.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">1:1 에러 타겟팅:</strong> 전체 채널이 아닌 개인 채널로 실패 사유를 보내 혼선을 방지합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 28:-6: Code Review (Jihwan's Backend Chat Sync - Part 2: Listener) -->
+    <div class="slide-container" id="slide14_code_review_back1_2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">백엔드 코드 리뷰: 트랜잭션 기반 동기화 (Listener)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.5; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// ChatEventListener.java (ApplicationEvent 구독자)</span>
+<span class="code-highlight"><span class="code-comment">// [핵심] DB 저장이 완벽하게 종료(Commit)된 직후에만 수신하여 작동!</span>
+<span class="code-annotation">@TransactionalEventListener</span>(phase = TransactionPhase.AFTER_COMMIT)</span>
+<span class="code-keyword">public void</span> <span class="code-method">handleChatEvent</span>(ChatEvent event) {
+    <span class="code-comment">// 안 읽은 메시지 푸시 알람 등은 DB 롤백이 일어나면 발송되면 안 됩니다.</span>
+    <span class="code-comment">// 트랜잭션 커밋이 확인된 후 안전하게 발송!</span>
+    messagingTemplate.convertAndSend(event.getDestination(), event.getPayload());
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(96, 165, 250, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(96, 165, 250, 0.3);">
+                        <h3 style="color: #60A5FA; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">AFTER_COMMIT 보장:</strong> 실제 데이터와 알림 사이의 불일치를 막기 위해 DB 확정 시점에만 이벤트를 실행합니다. </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 29: Code Review (Jihwan's Backend Caching) -->
+    <div class="slide-container scrollable-slide" id="slide14_code_review_back2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">백엔드 코드 리뷰: Spring Cache를 활용한 쿼리 최적화</h2>
+        <div class="content-area" style="overflow: visible;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.5; padding: 15px;">
+<span class="code-comment">// 1. 데이터 캐싱 (메모리에 묻어두기)</span>
+<span class="code-highlight"><span class="code-comment">// 가장 무겁고 빈번한 조회가 일어나는 '채팅방 상세 정보'를 캐싱 메모리에 저장</span>
+<span class="code-annotation">@Cacheable</span>(value = <span class="code-string">"chatRoomDetails"</span>, key = <span class="code-string">"#roomId + '_' + #memberId"</span>)</span>
+<span class="code-keyword">public</span> ChatRoomDto <span class="code-method">selectChatRoom</span>(Long roomId, Long memberId) {
+    <span class="code-comment">// 1번 방의 정보, 현재 인원 수, 1:1 방의 경우 상대방 이름 치환 등...</span>
+    <span class="code-comment">// 아주 무겁고 복잡한 연산을 거쳐 DTO를 만든 뒤 즉시 메모리에 캐싱됨 (최초 1회만 실행)</span>
+    <span class="code-keyword">return</span> dto; 
+}
+
+<span class="code-comment">// 2. 캐시 증발 (데이터 초기화)</span>
+<span class="code-highlight"><span class="code-comment">// 누군가 채팅을 쳐서 '마지막 메시지 미리보기'가 바뀌면 옛날 캐시는 즉시 파기!</span>
+<span class="code-annotation">@CacheEvict</span>(value = <span class="code-string">"chatRoomDetails"</span>, key = <span class="code-string">"#roomId"</span>)</span>
+<span class="code-keyword">public void</span> <span class="code-method">updateLastMessageWithRetry</span>(Long roomId, String content, String senderName) {
+    <span class="code-comment">// 낙관적 락(Optimistic Lock) 충돌 대비 재시도 로직 포함</span>
+    ChatRoom room = chatRoomRepository.findById(roomId)
+            .orElseThrow(() -> <span class="code-keyword">new</span> <span class="code-type">CustomException</span>(ErrorCode.ROOM_NOT_FOUND));
+        
+    <span class="code-comment">// 엔티티 더티 체킹을 통한 DB 업데이트 (직후 캐시는 자동 폭파됨)</span>
+    room.updateLastMessage(content, senderName); 
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(16, 185, 129, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.3);">
+                        <h3 style="color: #10B981; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">@Cacheable (조회 성능 극대화):</strong>수많은 유저가 반복적으로 껐다 켰다 하는 '채팅방 상세 정보' 조회 쿼리를 DB까지 보내지 않습니다. 스프링이 관리하는 메모리 <code>chatRoomDetails</code> 저장소에서 바로 객체를 반환하므로 부하가 0에 가깝게 줄어듭니다.</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">@CacheEvict (캐시 동기화 전략):</strong>성능은 빨라졌지만 과거 데이터가 보이는 버그를 막아야 합니다. 채팅방 정보가 변하는 주요 액션(메시지 전송, 사용자 입퇴장 등) 길목마다 <code>@CacheEvict</code> 폭파 스위치를 심어두어, 즉시 기존 캐시를 증발시키고 다음번에 새로 가장 신선한 쿼리를 날려 캐시를 갱신하도록 설계했습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 30-1: Code Review (Jihwan's Backend saveMessage PART 1) -->
+    <div class="slide-container" id="slide14_code_review_back3_1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">별도 첨부: saveMessage 전문 (1/3: 검증)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.4; padding: 15px 20px; width: 100%; box-sizing: border-box; flex-grow: 1; overflow-y: hidden;">
+<span class="code-comment">// 1. 도메인 유효성 검증: 엉뚱한 방에 보내거나 비권한 멤버를 차단</span>
+ChatRoomEntity chatRoom = chatRoomRepository.findById(messageDto.getChatRoomId())
+        .orElseThrow(() -> <span class="code-keyword">new</span> <span class="code-type">IllegalArgumentException</span>(<span class="code-string">"채팅방을 찾을 수 없습니다"</span>));
+
+ChatRoomUserEntity senderInfo = chatRoomUserRepository.findByChatRoomIdAndMemberId(
+        messageDto.getChatRoomId(), messageDto.getSenderId())
+        .orElseThrow(() -> <span class="code-keyword">new</span> <span class="code-type">IllegalArgumentException</span>(<span class="code-string">"채팅방 멤버만 메시지를 보낼 수 있습니다"</span>));
+
+<span class="code-comment">// 2. 로집 방어: 1:1 대화방에서 상대방이 아직 초대를 미수락(PENDING) 상태면 전송 차단</span>
+<span class="code-keyword">if</span> (<span class="code-string">"SINGLE"</span>.equals(chatRoom.getRoomType())) {
+    chatRoomUserRepository.findFirstByChatRoomIdAndMemberIdNot(chatRoom.getId(), senderInfo.getMember().getId())
+        .ifPresent(otherUser -> {
+            <span class="code-keyword">if</span> (<span class="code-string">"PENDING"</span>.equals(otherUser.getInvitationStatus())) {
+                <span class="code-keyword">throw new</span> <span class="code-type">IllegalArgumentException</span>(<span class="code-string">"상대방이 초대를 수락해야 합니다."</span>);
+            }
+        });
+}
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 30-2: Code Review (Jihwan's Backend saveMessage PART 2) -->
+    <div class="slide-container" id="slide14_code_review_back3_2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">별도 첨부: saveMessage 전문 (2/3: 인용 및 저장)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.4; padding: 15px 20px; width: 100%; box-sizing: border-box; flex-grow: 1; overflow-y: hidden;">
+<span class="code-comment">// 3. Entity 빌딩 및 인용(답장) 메시지 교차 검증</span>
+ChatMessageEntity.ChatMessageEntityBuilder messageBuilder = ChatMessageEntity.builder()
+        .chatRoom(chatRoom).sender(sender).content(messageDto.getContent())
+        .messageType(messageDto.getMessageType()).createdAt(LocalDateTime.now());
+
+<span class="code-keyword">if</span> (messageDto.getParentMessageId() != <span class="code-keyword">null</span>) {
+    ChatMessageEntity parent = chatMessageRepository.findById(messageDto.getParentMessageId()).orElse(<span class="code-keyword">null</span>);
+    <span class="code-keyword">if</span> (parent != <span class="code-keyword">null</span>) {
+        <span class="code-comment">// 부모 메시지가 같은 채팅방인지 식별자 변조 해킹 사전 차단</span>
+        <span class="code-keyword">if</span> (!parent.getChatRoom().getId().equals(messageDto.getChatRoomId())) {
+            <span class="code-keyword">throw new</span> <span class="code-type">IllegalArgumentException</span>(<span class="code-string">"부모 메시지 오류"</span>);
+        }
+        messageBuilder.parentMessage(parent);
+    }
+}
+
+<span class="code-comment">// 5. DB 영속성 획득 (INSERT)</span>
+ChatMessageEntity savedMessage = chatMessageRepository.save(messageBuilder.build());
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 30-3: Code Review (Jihwan's Backend saveMessage PART 3) -->
+    <div class="slide-container" id="slide14_code_review_back3_3">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">별도 첨부: saveMessage 전문 (3/3: 후처리)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.45; padding: 15px 20px; width: 100%; box-sizing: border-box; flex-grow: 1; overflow-y: hidden;">
+<span class="code-comment">// 6. [동시성] 최근 대화 갱신: 낙관적 락 + 지수 백오프 기반 재시도로 충돌 타파</span>
+updateLastMessageWithRetry(chatRoom.getId(), messageDto.getContent(), savedMessage.getCreatedAt(), messageDto.getMessageType());
+
+<span class="code-comment">// 7. [비동기 무결성] 발신자 자동 읽음 처리</span>
+<span class="code-keyword">try</span> {
+    updateReadStatus(chatRoom.getId(), sender.getId(), savedMessage.getId());
+} <span class="code-keyword">catch</span> (Exception e) { log.warn(<span class="code-string">"읽음 처리 실패"</span>); }
+
+<span class="code-comment">// 8. 소켓 전송용 DTO 최종 바인딩</span>
+messageDto.setMessageId(savedMessage.getId());
+messageDto.setCreatedAt(savedMessage.getCreatedAt());
+
+<span class="code-comment">// 9. 실시간 읽음 뱃지를 위한 잔존 카운트 계산</span>
+Integer unreadCount = calculateUnreadCount(savedMessage);
+messageDto.setUnreadCount(unreadCount);
+
+<span class="code-keyword">return</span> messageDto;
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 31-1: Code Review (Jihwan's Frontend Infinite Scroll - Part 1) -->
+    <div class="slide-container" id="slide14_code_review_front_1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">별도 첨부: 무한 스크롤 로직 전문 (Frontend 1/2)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.5; padding: 15px;">
+<span class="code-comment">// ChatRoomDetail.jsx</span>
+<span class="code-comment">// [프론트엔드 핵심] Intersection Observer를 통한 무결성 관측 로직</span>
+
+<span class="code-comment">// 1. 실시간 주머니(Ref) 준비: 렌더링 사이클에 독립적인 레퍼런스로 상태 참조 버그 철벽 방어</span>
+<span class="code-keyword">const</span> messagesRef = useRef([]);
+<span class="code-keyword">const</span> previousHeightRef = useRef(0);
+
+<span class="code-comment">// 2. State가 변할 때마다 주머니 최신화 (옵저버에게 항상 최신 데이터 공급)</span>
+useEffect(() => {
+  messagesRef.current = messages;
+}, [messages]);
+
+<span class="code-comment">// 3. 감지 시 실행될 함수 (옵저버 감시 카메라의 뇌)</span>
+<span class="code-keyword">const</span> handleObserver = useCallback((entries) => {
+  <span class="code-keyword">if</span> (entries[0].isIntersecting && hasMoreRef.current) {
+    <span class="code-comment">// 현재 가장 오래된 최상단 메시지 ID를 주머니에서 꺼내어 API 요청 타겟으로 지정!</span>
+    <span class="code-keyword">const</span> firstId = messagesRef.current[0]?.messageId;
+    
+    <span class="code-comment">// [보정 준비] 새로운 과거 메시지들이 DOM에 붙어버리기 '직전'의 전체 스크롤 길이를 캐싱</span>
+    previousHeightRef.current = scrollContainerRef.current.scrollHeight;
+    
+    fetchMoreMessages(firstId);
+  }
+}, []);
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 31-2: Code Review (Jihwan's Frontend Infinite Scroll - Part 2) -->
+    <div class="slide-container" id="slide14_code_review_front_2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">별도 첨부: 무한 스크롤 로직 전문 (Frontend 2/2)</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.5; padding: 15px;">
+<span class="code-comment">// 4. 화면이 밀리기(Paint) '직전' 찰나의 스크롤 보정 전략 (Scroll Jumping 100% 방어)</span>
+useLayoutEffect(() => {
+  <span class="code-keyword">if</span> (isLoadingMore) {
+    <span class="code-keyword">const</span> container = scrollContainerRef.current;
+    
+    <span class="code-comment">// [마법의 수식] 새로 불러온 과거 데이터 군단 때문에 뷰포트가 밑으로 늘어난 만큼, </span>
+    <span class="code-comment">// 다시 스크롤바를 억지로 하강 시킴</span>
+    <span class="code-comment">// -> 사용자의 뷰포트(시야)는 단 1px도 튀어오르지 않고 읽던 원래 위치에 완벽히 락 다운됨.</span>
+    container.scrollTop = container.scrollHeight - previousHeightRef.current;
+  }
+}, [messages]); <span class="code-comment">// 과거 메시지 배열 병합이 일어나는 동기화 순간 찰나에 발동!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- [Member] Hwang Seonwuk Section: Gamification -->
+    <div class="slide-container" id="member_title_seonwuk">
+        <div class="content-area" style="align-items: center;">
+            <div class="memo-card" style="border-left-color: #F87171;">
+                <div class="memo-header">
+                   <span class="role-tag" style="background: #F87171;">Logic Developer</span>
+                   <h2 class="memo-name">황선욱</h2>
+                   <div class="memo-title">게이미피케이션 플랫폼 엔진 구현</div>
+                </div>
+                <ul class="memo-list">
+                    <li>출석으로 방문을 유도</li>
+                    <li>퀴즈로 지식을 쌓음</li>
+                    <li>퀘스트를 통해 실천을 인증</li>
+                    <li>에코트리의 성장</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 이전에 있던 핵심코드들 삭제 (기능설명 뒤로 이동) -->
+
+    <!-- Slide 29: Gamification Overview (Seonwuk) -->
+    <div class="slide-container" id="slide11_overview">
+        <h2 class="slide-title">System Overview: 핵심 기능 전체 개요</h2>
+        <div class="content-area">
+            <div class="two-column" style="grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-arrows-spin" style="font-size: 150px; color: #F87171; opacity: 0.2;"></i>
+                    <p style="margin-top: 20px; font-size: 24px; color: #F87171; font-weight: bold;">유저 활동 중심의<br>인게이지먼트 사이클</p>
+                    <p style="margin-top: 15px; color: #A7F3D0;">단순 활동을 넘어선 '지속 가능한 환경 보호 환경' 구축</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 20px; border-left: 5px solid #F87171;">
+                    <h3 style="color: #F8FAFC; margin-bottom: 20px; font-size: 24px;">핵심 기능 4대 구성 & 로직 흐름</h3>
+                    <ul class="styled-list">
+                        <li><strong style="color: #FBBF24;">출석 체크 (Attendance):</strong> 출석으로 방문을 유도</li>
+                        <li><strong style="color: #34D399;">환경 퀴즈 (Quiz):</strong> 퀴즈로 지식을 쌓음</li>
+                        <li><strong style="color: #60A5FA;">데일리 퀘스트 (Quest):</strong> 퀘스트를 통해 실천을 인증</li>
+                        <li><strong style="color: #A7F3D0;">에코트리 (EcoTree):</strong> 에코트리의 성장</li>
+                    </ul>
+                    <div style="margin-top: 25px; padding: 15px; background: #064E3B; border-radius: 10px; color: #D1FAE5; text-align: center; font-weight: bold; font-size: 18px;">
+                        미션 트리거 ➔ 포인트/XP 획득 ➔ 나무 성장 & 레벨업 ➔ 리텐션 극대화
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 30:-1: Attendance (Seonwuk) -->
+    <div class="slide-container" id="slide11_attendance">
+        <h2 class="slide-title">1. 출석 체크 (Attendance)</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #F87171;">
+                    <h3 style="color: #F87171; margin-bottom: 20px;">연속성이 가치가 되는 '습관 형성' 엔진</h3>
+                    <p style="color: #E2E8F0; margin-bottom: 20px;">유저의 매일 접속을 유도하는 출석 및 캘린더 시스템 구동</p>
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">연속 출석 알고리즘:</strong> LocalDate 기반 실시간 날짜 판별 로직</li>
+                        <li><strong style="color: #F8FAFC;">마일스톤 보너스:</strong> 15일/30일 단위 보상으로 리텐션 강화</li>
+                        <li><strong style="color: #F8FAFC;">비즈니스 임팩트:</strong> 서비스 방문 빈도(Frequency) 및 고착도(Stickiness) 대폭 상승</li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-regular fa-calendar-check" style="font-size: 150px; color: #F87171; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Daily Check-In</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 기존에 있던 Attendance 코드 리뷰 부분은 EcoTree 마지막으로 옮기기 위해 컨테이너 삭제함 -->
+
+    <!-- Slide 31:-2: Quiz (Seonwuk) -->
+    <div class="slide-container" id="slide11_quiz">
+        <h2 class="slide-title">2. 환경 퀴즈 (Quiz)</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-graduation-cap" style="font-size: 150px; color: #34D399; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Eco Education</h3>
+                </div>
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #34D399;">
+                    <h3 style="color: #34D399; margin-bottom: 20px;">지식과 보상을 연결하는 '에코-에듀' 시스템</h3>
+                    <p style="color: #E2E8F0; margin-bottom: 20px;">일일 할당 방식으로 환경 상식을 제공하는 퀴즈 플랫폼</p>
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">IntegratedHistory:</strong> 통합 이력 기반 중복 풀이 방지 및 선별적 할당</li>
+                        <li><strong style="color: #F8FAFC;">등급별 차등 보상:</strong> 난이도에 따른 포인트 지급 트리거 엔진 연동</li>
+                        <li><strong style="color: #F8FAFC;">비즈니스 임팩트:</strong> 꾸준한 지식 자극과 규칙적인 콘텐츠 소비 유도</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 기존 Quiz 코드 리뷰 영역 (위 핵심 코드로 이동됨) -->
+
+    <!-- Slide 32:-3: Quest (Seonwuk) -->
+    <div class="slide-container" id="slide11_quest">
+        <h2 class="slide-title">3. 데일리 퀘스트 (Quest)</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #60A5FA;">
+                    <h3 style="color: #60A5FA; margin-bottom: 20px;">온·오프라인을 잇는 '실천의 시각화'</h3>
+                    <p style="color: #E2E8F0; margin-bottom: 20px;">실제 환경 행동을 사진으로 증명하는 데일리 액션 플랫폼</p>
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">데이터 무결성:</strong> MultipartFile 처리와 DB Transaction의 결합</li>
+                        <li><strong style="color: #F8FAFC;">인증 기반 리워드:</strong> 사진 업로드 완료를 트리거 포인트로 지정</li>
+                        <li><strong style="color: #F8FAFC;">비즈니스 임팩트:</strong> 가상의 디지털 경험을 실제 삶의 행동 변화로 직결</li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-camera-retro" style="font-size: 150px; color: #60A5FA; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Action Request</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 기존 Quest 코드 리뷰 영역 (삭제 후 이동) -->
+
+    <!-- Slide 33:-4: EcoTree (Seonwuk) -->
+    <div class="slide-container" id="slide11_ecotree">
+        <h2 class="slide-title">4. 에코트리 (EcoTree)</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-seedling" style="font-size: 150px; color: #A7F3D0; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Visual Growth</h3>
+                </div>
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #A7F3D0;">
+                    <h3 style="color: #A7F3D0; margin-bottom: 20px;">노력을 숲으로 바꾸는 '비주얼 성취' 시스템</h3>
+                    <p style="color: #E2E8F0; margin-bottom: 20px;">획득 포인트를 경험치(XP)로 환산하여 보여주는 메인보드</p>
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">실시간 동기화:</strong> 포인트 지갑 변화와 나무 성장의 즉각적 반영</li>
+                        <li><strong style="color: #F8FAFC;">레벨 업 스케일링:</strong> 수학적으로 밸런싱된 4단계 성장 스테이지 로직</li>
+                        <li><strong style="color: #F8FAFC;">비즈니스 임팩트:</strong> 장기 목표 부여로 인한 탈퇴율 감소 및 시각적 포만감</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 황선욱 파트 메인 코드리뷰 5: 출석 서비스 로직 (사용자 추가 요청) -->
+    <div class="slide-container" id="slide_seonwuk_code5">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">심화 코드 리뷰: AttendanceService.java</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.5; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// AttendanceService.java</span>
+<span class="code-annotation">@Transactional</span>
+<span class="code-keyword">public int</span> <span class="code-method">checkAttendance</span>(<span class="code-keyword">int</span> memberId) {
+    <span class="code-comment">// 1. 당일 중복 체크 (하루 1회 제한)</span>
+    <span class="code-keyword">if</span> (attendanceMapper.countAttendanceToday(memberId) > <span class="code-number">0</span>) <span class="code-keyword">return</span> -<span class="code-number">1</span>;
+
+    <span class="code-comment">// 2. 어제 출석 여부를 통한 연속 출석일 계산</span>
+    Attendance last = attendanceMapper.findLastAttendanceByUserId(memberId);
+    <span class="code-keyword">int</span> consecutiveDays = <span class="code-number">1</span>;
+    <span class="code-keyword">if</span> (last != <span class="code-keyword">null</span> && last.getAttendanceDate().toLocalDate().equals(LocalDate.now().minusDays(<span class="code-number">1</span>))) {
+        consecutiveDays = last.getConsecutiveDays() + <span class="code-number">1</span>; <span class="code-comment">// 연속 기록 갱신</span>
+    }
+
+    <span class="code-comment">// 3. 연속 일수에 따른 보너스 포인트 지급 (15일/30일 마일스톤)</span>
+    <span class="code-keyword">int</span> points = (consecutiveDays <= <span class="code-number">5</span>) ? <span class="code-number">100</span> : <span class="code-number">150</span>;
+    <span class="code-keyword">if</span> (consecutiveDays == <span class="code-number">15</span>) points += <span class="code-number">250</span>; 
+    <span class="code-keyword">else if</span> (consecutiveDays == <span class="code-number">30</span>) points += <span class="code-number">500</span>;
+
+    <span class="code-comment">// 4. 기록 저장과 지갑 업데이트 수행</span>
+    attendanceMapper.insertAttendance(newAttendance);
+    attendanceMapper.updatePoint(paramMap);
+    <span class="code-keyword">return</span> points;
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(248, 113, 113, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(248, 113, 113, 0.3);">
+                        <h3 style="color: #F87171; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">마일스톤 동적 보상:</strong>단순 일괄 지급이 아닌, 15/30일 단위 보너스 계산 분기</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">트랜잭션 관리:</strong>출석 이력 INSERT와 지갑 UPDATE를 하나의 단위로 묶어 무결성 확립</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 황선욱 파트 메인 코드리뷰 6: 퀘스트 서비스 로직 (사용자 추가 요청) -->
+    <div class="slide-container" id="slide_seonwuk_code6">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">심화 코드 리뷰: QuestService.java</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11.5px; line-height: 1.5; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// QuestService.java</span>
+<span class="code-annotation">@Transactional</span>
+<span class="code-keyword">public void</span> <span class="code-method">certifyQuest</span>(<span class="code-keyword">int</span> userId, <span class="code-keyword">int</span> questNo, MultipartFile file) {
+    <span class="code-comment">// 1. 중복 인증 방지 (데이터 무결성)</span>
+    <span class="code-keyword">if</span> (historyMapper.checkQuestCompleted(userId, questNo) > <span class="code-number">0</span>) 
+        <span class="code-keyword">throw new</span> RuntimeException(<span class="code-string">"이미 인증한 퀘스트입니다."</span>);
+
+    <span class="code-comment">// 2. 통합 이력 상태 업데이트 (Pending -> Y) 및 사진 URL 저장</span>
+    String savedFileName = <span class="code-string">"quest_cert_"</span> + System.currentTimeMillis() + <span class="code-string">".jpg"</span>;
+    <span class="code-keyword">int</span> updated = historyMapper.updateHistoryStatus(userId, <span class="code-string">"QUEST"</span>, questNo, <span class="code-string">"Y"</span>, savedFileName);
+
+    <span class="code-comment">// 3. 업데이트 실패 시 수동 롤백 유도</span>
+    <span class="code-keyword">if</span> (updated == <span class="code-number">0</span>) <span class="code-keyword">throw new</span> RuntimeException(<span class="code-string">"정상적인 인증 대상이 아닙니다."</span>);
+
+    <span class="code-comment">// 4. 포인트 최종 지급 (성공 시에만 실행)</span>
+    <span class="code-keyword">int</span> pointResult = questMapper.updateMemberPoints(userId, quest.getPoint());
+    <span class="code-keyword">if</span> (pointResult <= <span class="code-number">0</span>) <span class="code-keyword">throw new</span> RuntimeException(<span class="code-string">"포인트 지급 중 에러"</span>);
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(96, 165, 250, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(96, 165, 250, 0.3);">
+                        <h3 style="color: #60A5FA; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">사전 방어:</strong>진입 시점에 중복 인증 조회를 선행하여 불필요한 파일 I/O 방지</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">예외 롤백 유도(Throw):</strong>update 반환값이 0일 때 명시적 예외를 던져 잦은 재화 복사 버그를 차단</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- [Member] Jo Juhyun Section: Community -->
+    <div class="slide-container" id="member_title_juhyun">
+        <div class="content-area" style="align-items: center;">
+            <div class="memo-card" style="border-left-color: #60A5FA;">
+                <div class="memo-header">
+                   <span class="role-tag" style="background: #60A5FA;">Admin Service Developer</span>
+                   <h2 class="memo-name">조주현</h2>
+                   <div class="memo-title">커뮤니티 관리 / 통합 신고 시스템 구현</div>
+                </div>
+                <ul class="memo-list">
+                    <li>사용자 신고 데이터 집계 및 관리 시스템</li>
+                    <li>부적절한 컨텐츠 필터링 및 게시물 처리 워크플로우</li>
+                    <li>유저 피드백 수집 및 서비스 개선 게시판 운영 로직</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 1: 커뮤니티 -->
+    <div class="slide-container" id="slide_juhyun_community">
+        <h2 class="slide-title">1. 커뮤니티 (Community)</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-users-rectangle" style="font-size: 150px; color: #60A5FA; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Interactive Board</h3>
+                </div>
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #60A5FA;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">계층형 댓글:</strong> 댓글 그룹(groupId)과 깊이(depth) 기반 대댓글 무한 중첩, 재귀 렌더링</li>
+                        <li><strong style="color: #F8FAFC;">좋아요 업데이트:</strong> 서버 응답 전 UI 선반영, API 재호출 없음</li>
+                        <li><strong style="color: #F8FAFC;">등록·수정 통합 모달:</strong> postId 유무로 분기, 파일 개별 삭제 및 추가 동시 처리</li>
+                        <li><strong style="color: #F8FAFC;">검색·카테고리 교집합 조회:</strong> 키워드 검색과 카테고리 필터 동시 적용</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 2: 건의사항 -->
+    <div class="slide-container" id="slide_juhyun_request">
+        <h2 class="slide-title">2. 건의사항 (Voc & FAQ)</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center; grid-template-columns: 1.3fr 0.7fr;">
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #A7F3D0;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">비공개 접근 이중 방어:</strong> 백엔드 403 + 프론트 isLoading 타이밍 제어로 권한 오작동 방지</li>
+                        <li><strong style="color: #F8FAFC;">비공개 글 목록 보호:</strong> 타인의 비공개 글은 목록에서 내용 미리보기 자체를 숨김 처리</li>
+                        <li><strong style="color: #F8FAFC;">관리자 전용 답변 처리:</strong> 답변 등록 완료 시에만 '답변 완료' 상태 변경 가능, 미등록 시 상태 변경 차단</li>
+                        <li><strong style="color: #F8FAFC;">FAQ 고정 노출:</strong> IS_FAQ 설정 글 목록 최상단 고정, 일반 글과 시각적 구분</li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-clipboard-question" style="font-size: 150px; color: #A7F3D0; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">User Feedback</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 3: 신고 관리 -->
+    <div class="slide-container" id="slide_juhyun_report">
+        <h2 class="slide-title">3. 통합 신고 관리 (Report)</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center;">
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 150px; color: #F87171; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Abuse Control</h3>
+                </div>
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #F87171;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">자동 블라인드:</strong> 처리 완료(RESOLVED) 누적 시 해당 게시글·댓글·리뷰 자동 블라인드 처리</li>
+                        <li><strong style="color: #F8FAFC;">신고 원본 바로보기:</strong> 게시글·댓글 신고 모두 새 탭으로 원본 이동, 댓글 신고 시 URL 파라미터로 해당 댓글 하이라이트 강조</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 4: 관리자 기능 -->
+    <div class="slide-container" id="slide_juhyun_admin">
+        <h2 class="slide-title">4. 최고 관리자 대시보드 (Admin)</h2>
+        <div class="content-area">
+            <div class="two-column" style="align-items: center; grid-template-columns: 1.3fr 0.7fr;">
+                <div style="background: #132A1E; padding: 40px; border-radius: 24px; border-left: 5px solid #FBBF24;">
+                    <ul class="styled-list">
+                        <li><strong style="color: #F8FAFC;">칸반 보드:</strong> 접수완료·처리완료·반려 3열, 열별 독립 무한 스크롤</li>
+                        <li><strong style="color: #F8FAFC;">통합 검색·필터:</strong> 타입·사유·상태·신고자 이름 조합 교집합 조회</li>
+                        <li><strong style="color: #F8FAFC;">관리자 전용 접근 제어:</strong> 로그인 사용자 권한 검증 기반 UI 분기, 일반 사용자에게 관리 기능 완전 비노출</li>
+                        <li><strong style="color: #F8FAFC;">상태 변경 후 전체 갱신:</strong> 처리 완료 시 3개 칸반 동시 새로고침으로 현황 즉시 반영</li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fa-solid fa-user-tie" style="font-size: 150px; color: #FBBF24; margin-bottom: 20px;"></i>
+                    <h3 style="color: #F8FAFC;">Admin Dashboard</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Juhyun Code Review 1-1: Blind Processing Status -->
+    <div class="slide-container" id="slide_juhyun_code1_1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: 신고 상태 변경 및 트리거</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11px; line-height: 1.4; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// ReportsServiceImpl.java</span>
+<span class="code-annotation">@Transactional</span>
+<span class="code-keyword">public int</span> <span class="code-method">reportsStatus</span>(<span class="code-keyword">int</span> reportsId, String status) {
+    <span class="code-keyword">int</span> result = dao.reportsStatus(sqlSession, reportsId, status);
+    
+    <span class="code-comment">// RESOLVED일 때만 블라인드 체크 트리거</span>
+    <span class="code-keyword">if</span>(result > <span class="code-number">0</span> && <span class="code-string">"RESOLVED"</span>.equals(status)) {
+        ReportsVO report = dao.reportsDetail(sqlSession, reportsId);
+        Map&lt;String, Object&gt; map = <span class="code-keyword">new</span> HashMap&lt;&gt;();
+        map.put(<span class="code-string">"type"</span>, report.getType());
+        map.put(<span class="code-string">"postId"</span>, report.getPostId());
+        map.put(<span class="code-string">"replyId"</span>, report.getReplyId());
+        map.put(<span class="code-string">"reviewId"</span>, report.getReviewId());
+        reportsBlind(map);
+    }
+    <span class="code-keyword">return</span> result;
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(248, 113, 113, 0.1); padding: 25px; border-radius: 20px; border: 1px solid rgba(248, 113, 113, 0.3);">
+                        <h3 style="color: #F87171; font-size: 22px; margin-bottom: 15px;">Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li><strong style="color: #F8FAFC;">이벤트 트리거:</strong> 관리자 승인 시점에 맞춰 후속 블라인드 로직을 자동 연쇄 실행합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Juhyun Code Review 1-2: Blind Processing Execution -->
+    <div class="slide-container" id="slide_juhyun_code1_2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: 누적 수량 기반 자동 블라인드</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.25fr 0.75fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11px; line-height: 1.4; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// ReportsServiceImpl.java - reportsBlind</span>
+<span class="code-keyword">public int</span> <span class="code-method">reportsBlind</span>(Map&lt;String, Object&gt; map) {
+    <span class="code-comment">// 누적 처리 횟수 조회</span>
+    <span class="code-keyword">int</span> resolvedCount = dao.selectResolvedCount(sqlSession, map);
+    
+    <span class="code-keyword">if</span> (resolvedCount >= <span class="code-number">10</span>) {
+        <span class="code-comment">// type 하나로 POST·REPLY·REVIEW 세 테이블 동적 분기</span>
+        <span class="code-keyword">return</span> dao.reportsBlind(sqlSession, map);
+    }
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(248, 113, 113, 0.1); padding: 25px; border-radius: 20px; border: 1px solid rgba(248, 113, 113, 0.3);">
+                        <h3 style="color: #F87171; font-size: 22px; margin-bottom: 15px;">Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li><strong style="color: #F8FAFC;">임계치 기반 처리:</strong> 10회 이상 누적 시 시스템이 직접 블라인드를 집행하여 자정 작용을 극대화합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Juhyun Code Review 2: Inquiry Reply (Part 1 - Submit Logic) -->
+    <div class="slide-container" id="slide_juhyun_code2_1_1">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: 건의글 답변 API 통신 로직</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.15fr 0.85fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11px; line-height: 1.4; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// InquiriesDetailPage.jsx - 답변 등록 로직</span>
+<span class="code-keyword">const</span> <span class="code-method">handleAdminReplySubmit</span> = <span class="code-keyword">async</span> () => {
+    <span class="code-keyword">if</span> (!adminReplyContent.trim()) {
+        setAlertConfig({ isOpen: <span class="code-keyword">true</span>, message: <span class="code-string">"답변 내용을 입력하세요."</span> });
+        <span class="code-keyword">return</span>;
+    }
+    <span class="code-keyword">try</span> {
+        <span class="code-keyword">await</span> inquiriesApi.inquiriesAdminReply(inquiriesId, user.memberId, adminReplyContent);
+        loadInquiry(user?.memberId); <span class="code-comment">// 등록 성공 후 데이터 새로고침</span>
+    } <span class="code-keyword">catch</span> (e) { console.error(e); }
+};
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(96, 165, 250, 0.1); padding: 25px; border-radius: 20px; border: 1px solid rgba(96, 165, 250, 0.3);">
+                        <h3 style="color: #60A5FA; font-size: 22px; margin-bottom: 15px;">Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li><strong style="color: #F8FAFC;">비동기 연동:</strong> API 호출 후 즉시 상태를 갱신하여 관리자 생산성을 높였습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Juhyun Code Review 2: Inquiry Reply (Part 2 - UI Rendering) -->
+    <div class="slide-container" id="slide_juhyun_code2_1_2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: 권한별 조건부 렌더링</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.15fr 0.85fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11px; line-height: 1.4; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// InquiriesDetailPage.jsx - 권한에 따른 UI</span>
+{user?.memberId === <span class="code-number">1</span> ? (
+    &lt;div&gt;
+        &lt;textarea value={adminReplyContent} onChange={(e) => setAdminReplyContent(e.target.value)} /&gt;
+        &lt;button onClick={handleAdminReplySubmit}&gt;
+            {inquiry.adminReply ? <span class="code-string">"답변 수정"</span> : <span class="code-string">"답변 등록"</span>}
+        &lt;/button&gt;
+    &lt;/div&gt;
+) : (
+    &lt;div&gt;{inquiry.adminReply || <span class="code-string">"아직 답변이 없습니다."</span>}&lt;/div&gt;
+)}
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(96, 165, 250, 0.1); padding: 25px; border-radius: 20px; border: 1px solid rgba(96, 165, 250, 0.3);">
+                        <h3 style="color: #60A5FA; font-size: 22px; margin-bottom: 15px;">Point</h3>
+                        <ul class="styled-list" style="font-size: 12.5px;">
+                            <li><strong style="color: #F8FAFC;">Role-based UI:</strong> 관리자와 일반 유저의 화면을 하나의 컴포넌트에서 분리 처리했습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Juhyun Code Review 2: Inquiry Reply (Part 2 - List Page) -->
+    <div class="slide-container" id="slide_juhyun_code2_2">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: 건의글 목록 상태 연동 로직</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.15fr 0.85fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11px; line-height: 1.4; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// InquiriesPage.jsx</span>
+
+<span class="code-comment">// 카드의 상태 관리 버튼 클릭 시 최신 inquiry 전달</span>
+<span class="code-keyword">const</span> <span class="code-method">handleStatusClick</span> = (inquiry, e) => {
+  e.stopPropagation();
+  setSelectedInquiry(inquiry); <span class="code-comment">// 최신 데이터가 담긴 inquiry 저장</span>
+  setIsStatusModalOpen(<span class="code-keyword">true</span>);
+};
+
+<span class="code-comment">// Status 모달로 현재 선택된 문의글(inquiry) 데이터 Prop 전달</span>
+&lt;InquiriesStatusModal 
+  inquiry={selectedInquiry} 
+  isOpen={isStatusModalOpen} 
+  onClose={() => setIsStatusModalOpen(false)} 
+/&gt;
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(167, 243, 208, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(167, 243, 208, 0.3);">
+                        <h3 style="color: #A7F3D0; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 13px;">
+                            <li style="margin-bottom: 0px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">답변 등록 후 목록 데이터 연동:</strong>DetailPage에서 답변 등록 완료 후 목록으로 돌아오면 최신 데이터로 갱신. 상태 관리 버튼 클릭 시 adminReply가 채워진 최신 inquiry가 StatusModal에 Props로 안전하게 단방향 전달되는 구조</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide Juhyun Code Review 3: Inquiry Status -->
+    <div class="slide-container" id="slide_juhyun_code3">
+        <h2 class="slide-title" style="font-size: 28px; padding: 15px 40px; margin-bottom: 20px; flex-shrink: 0;">코드 리뷰: 건의글 답변 완료 상태 활성화</h2>
+        <div class="content-area" style="display: flex; flex-direction: column; gap: 20px; padding-top: 5px; padding-bottom: 20px; height: 100%;">
+            <div class="two-column" style="grid-template-columns: 1.15fr 0.85fr; gap: 30px; align-items: start; height: 100%;">
+                <div class="code-block" style="white-space: pre-wrap !important; word-break: break-all; font-size: 11px; line-height: 1.4; padding: 15px; height: 100%; box-sizing: border-box; overflow-y: hidden;">
+<span class="code-comment">// InquiriesStatusModal.jsx</span>
+
+<span class="code-comment">// 답변 필요 여부를 데이터로 선언</span>
+<span class="code-keyword">const</span> statusOptions = [
+  { value: <span class="code-string">"SUBMITTED"</span>, label: <span class="code-string">"접수완료"</span>, icon: <span class="code-string">"📝"</span> },
+  { value: <span class="code-string">"PROCESSING"</span>, label: <span class="code-string">"진행중"</span>,  icon: <span class="code-string">"⚙"</span> },
+  { value: <span class="code-string">"COMPLETED"</span>,  label: <span class="code-string">"답변완료"</span>, icon: <span class="code-string">"✅"</span>, 
+    requireReply: <span class="code-keyword">true</span> },  <span class="code-comment">// 답변 필요 플래그</span>
+];
+
+<span class="code-comment">// adminReply 유무로 활성/비활성 결정</span>
+&lt;div
+  key={option.value}
+  className={<span class="code-string">`</span>${styles.statusCard} ${selectedStatus === option.value ? styles.active : <span class="code-string">""</span>} ${
+    option.requireReply && !inquiry?.adminReply ? styles.disabled : <span class="code-string">""</span>}
+  <span class="code-string">`</span>}
+  onClick={() => {
+    <span class="code-keyword">if</span> (option.requireReply && !inquiry?.adminReply) <span class="code-keyword">return</span>; <span class="code-comment">// 클릭 차단</span>
+    setSelectedStatus(option.value);
+  }}
+  style={{
+    opacity: option.requireReply && !inquiry?.adminReply ? <span class="code-number">0.5</span> : <span class="code-number">1</span>,
+    cursor:  option.requireReply && !inquiry?.adminReply ? <span class="code-string">"not-allowed"</span> : <span class="code-string">"pointer"</span>,
+  }}
+&gt;
+                </div>
+                <div style="text-align: left;">
+                    <div style="background: rgba(167, 243, 208, 0.1); padding: 30px; border-radius: 20px; border: 1px solid rgba(167, 243, 208, 0.3);">
+                        <h3 style="color: #A7F3D0; font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-code" style="margin-right: 12px;"></i>Code Point</h3>
+                        <ul class="styled-list" style="font-size: 13px;">
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">단방향 데이터 흐름으로 연동:</strong>결과 모달로 전달된 data를 활용, 전역 상태 관리 없이 리액트 흐름만으로 두 컴포넌트가 연동</li>
+                            <li style="margin-bottom: 15px; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">데이터로 제어하는 UI:</strong>requireReply 플래그를 statusOptions 배열에 선언, 이후 상태 옵션이 추가되더라도 데이터만 수정하면 확장 가능</li>
+                            <li style="margin-bottom: 0; font-size: 14px; line-height: 1.55;"><strong style="display: block; font-size: 16px; color: #F8FAFC; margin-bottom: 5px;">3단계 비활성화:</strong>클릭 이벤트 차단 + disabled CSS 적용 + not-allowed 마우스 커서를 동시 전개하여 시각/기능을 완벽히 비활성화</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Slide: Thank You -->
+    <div class="slide-container" id="slide_final_thanks">
+        <div class="content-area" style="justify-content: center; align-items: center; text-align: center; height: 100%;">
+            <h1 style="font-size: 80px; color: #34D399; margin-bottom: 20px; font-weight: 800; letter-spacing: 2px;">Thank You</h1>
+            <p style="font-size: 24px; color: #94A3B8; margin-top: 20px;">지금까지 EasyEarth 팀이었습니다. 감사합니다.</p>
+        </div>
+    </div>
+
+    <!-- Slide 44: Q&A (Moved after Slide 15) -->
+    <div class="slide-container" id="slide18">
+        <div class="section-title-layout content-area">
+            <h2 style="font-size: 110px; color: #F8FAFC;">Q & A</h2>
+            <p style="font-size: 32px; color: #34D399; margin-top: 20px;">무엇이든 물어보세요</p>
+            <div style="margin-top: 50px; display: flex; justify-content: center; gap: 40px; color: #94A3B8; font-size: 40px; opacity: 0.5;">
+                <i class="fa-solid fa-comments"></i>
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <i class="fa-solid fa-earth-americas"></i>
+            </div>
+        </div>
+    </div>
+
+<style>
+        /* 기존 스타일 무시하고 화면에 꽉 차게 강제 적용 */
+        body {
+            height: 100vh !important;
+            width: 100vw !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            background-color: #050A07 !important;
+        }
+
+        /* 기본적으로 모든 슬라이드를 완벽히 숨김 */
+        .slide-container {
+            display: none !important;
+        }
+        
+        /* 세로 스크롤을 허용할 특별 슬라이드용 (코드리뷰 등) */
+        .slide-container.scrollable-slide {
+            overflow-y: auto;
+            justify-content: flex-start;
+        }
+
+        /* 'active' 클래스가 붙은 슬라이드만 화면에 보여줌 */
+        .slide-container.active {
+            display: flex !important;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        /* 9번 슬라이드(그리드 레이아웃)를 위한 예외 처리 강제 적용 */
+        .slide-container.bleed-image-layout.active {
+            display: grid !important;
+        }
+
+        /* 슬라이드 전환 애니메이션 */
+        /* 페이지 번호 스타일 */
+        .page-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            color: #94A3B8;
+            font-weight: 600;
+            z-index: 20;
+            background: rgba(11, 31, 21, 0.6);
+            padding: 5px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide-container');
+            let currentSlide = 0;
+
+            slides[currentSlide].classList.add('active');
+            
+            // 페이지 번호 생성 및 추가
+            const pageNumDiv = document.createElement('div');
+            pageNumDiv.className = 'page-number';
+            document.body.appendChild(pageNumDiv);
+
+            function updatePageNumber() {
+                pageNumDiv.innerText = `${currentSlide + 1} / ${slides.length}`;
+            }
+            updatePageNumber();
+
+            function showSlide(index) {
+                if (index < 0 || index >= slides.length) return; 
+                slides[currentSlide].classList.remove('active');
+                currentSlide = index;
+                slides[currentSlide].classList.add('active');
+                updatePageNumber();
+            }
+
+            // 1. 키보드 방향키 조작
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                    showSlide(currentSlide + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    showSlide(currentSlide - 1);
+                }
+            });
+
+            // 2. 마우스 클릭 조작 (텍스트 드래그 시에는 안 넘어가게 예외 처리)
+            document.addEventListener('click', (e) => {
+                // 사용자가 텍스트를 드래그해서 선택한 상태면 무시
+                if (window.getSelection().toString().length > 0) return;
+                showSlide(currentSlide + 1);
+            });
+
+            // 3. 우클릭 시 이전 슬라이드로 이동
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault(); 
+                showSlide(currentSlide - 1);
+            });
+
+            // 4. 모바일 등 화면 크기에 맞춰 슬라이드 비율 자동 축소 (Responsive Scaling)
+            function adjustScale() {
+                // 1280x720 원본 비율을 기준으로, 현재 창 크기에 맞게 배율 계산
+                const scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720, 1);
+                slides.forEach(slide => {
+                    slide.style.transform = `scale(${scale})`;
+                    slide.style.transformOrigin = 'center center';
+                });
+            }
+            
+            // 초기 1회 실행 및 창 크기 조절 시마다 반응
+            adjustScale();
+            window.addEventListener('resize', adjustScale);
+        });
+    </script>
+</body>
+</html>
