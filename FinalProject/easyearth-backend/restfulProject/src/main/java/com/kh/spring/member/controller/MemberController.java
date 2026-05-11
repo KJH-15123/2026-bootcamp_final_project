@@ -311,18 +311,19 @@ public class MemberController {
         }
     }
 	
-	@Operation(summary = "포인트 조회", description = "누적 사용/획득 포인트 , 보유 포인트 조회")
+    @Operation(summary = "포인트 조회", description = "누적 사용/획득 포인트 , 보유 포인트 조회")
     @GetMapping("/point/{memberId}")
     public ResponseEntity<?> getMemberPoint(@PathVariable int memberId) {
         MemberWalletVO wallet = service.getMemberPoint(memberId);
-        wallet.setMemberId(memberId);
-        System.out.println(wallet);
-        System.out.println("memberId = " + memberId);
-        if(wallet!=null) {
+        
+        if(wallet != null) {
+            wallet.setMemberId(memberId);
+            log.info("포인트 조회 성공: memberId={}, wallet={}", memberId, wallet);
             return ResponseEntity.ok(wallet);
         }
         else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("존재하지 않는 회원입니다.");
+            log.warn("포인트 조회 실패: 존재하지 않는 회원 또는 지갑 정보 없음 (memberId={})", memberId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("존재하지 않는 회원 혹은 지갑 정보가 없습니다.");
         }
     }
 

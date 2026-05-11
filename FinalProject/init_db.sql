@@ -773,7 +773,7 @@ INSERT INTO ITEM (ITEM_ID, NAME, DESCRIPTION, PRICE, RARITY, IS_ON_SALE, CATEGOR
 INSERT INTO ITEM (ITEM_ID, NAME, DESCRIPTION, PRICE, RARITY, IS_ON_SALE, CATEGORY) VALUES (SEQ_ITEM_ID.NEXTVAL, '미래 지구의 구원자', '다음 세대를 위한 최후의 보루', 999999, 'LEGENDARY', 'N', 'TITLE');
 
 -- ===================================================
--- 테스트 계정 (admin/admin, user01/pass01, user02/pass02)
+-- 테스트 계정 (admin/admin, user01/pass01, user02/pass02, user03/pass03, user04/pass04, user05/pass05)
 -- BCrypt strength 10 | 가입 시 트리거로 POINT_WALLET(2000P) + ECO_TREE 자동 생성
 -- ===================================================
 INSERT INTO MEMBER (MEMBER_ID, LOGIN_ID, PASSWORD, NAME, BIRTHDAY, GENDER, ADDRESS, STATUS, IS_ONLINE, CREATED_AT)
@@ -786,13 +786,13 @@ INSERT INTO MEMBER (MEMBER_ID, LOGIN_ID, PASSWORD, NAME, BIRTHDAY, GENDER, ADDRE
 VALUES (MEMBER_SEQ.NEXTVAL, 'user02', '$2a$10$u7vs8qDhkG4k855mM9A53eaYNWXHqHLDTg0Z4lD7A3hwK3Y20IHxy', '테스트유저02', '2001-09-15', 'F', '서울시 서초구', 'ACTIVE', 0, SYSDATE);
 
 INSERT INTO MEMBER (MEMBER_ID, LOGIN_ID, PASSWORD, NAME, BIRTHDAY, GENDER, ADDRESS, STATUS, IS_ONLINE, CREATED_AT)
-VALUES (MEMBER_SEQ.NEXTVAL, 'user03', '$2a$10$C/WGMjLT/xqFQcHbumQ/ieKD896NoUojmIEXlhww0TDuWfxNE/L1q', '테스트유저03', '1995-12-25', 'M', '서울시 송파구', 'ACTIVE', 0, SYSDATE);
+VALUES (MEMBER_SEQ.NEXTVAL, 'user03', '$2a$10$6jXp.YyF2qCgZ9pW6B2IueXqVfX8FpY/W1A/r.v1n8f1G9b2C3D4E', '테스트유저03', '1995-12-25', 'M', '서울시 송파구', 'ACTIVE', 0, SYSDATE);
 
 INSERT INTO MEMBER (MEMBER_ID, LOGIN_ID, PASSWORD, NAME, BIRTHDAY, GENDER, ADDRESS, STATUS, IS_ONLINE, CREATED_AT)
-VALUES (MEMBER_SEQ.NEXTVAL, 'user04', '$2a$10$C/WGMjLT/xqFQcHbumQ/ieKD896NoUojmIEXlhww0TDuWfxNE/L1q', '테스트유저04', '2003-03-01', 'F', '서울시 종로구', 'ACTIVE', 0, SYSDATE);
+VALUES (MEMBER_SEQ.NEXTVAL, 'user04', '$2a$10$7kYq.ZzG3rDhA0qX7C3JvfYrWcY9GqZ/X2B/s.w2o9g2H0c3D4E5F', '테스트유저04', '2003-03-01', 'F', '서울시 종로구', 'ACTIVE', 0, SYSDATE);
 
 INSERT INTO MEMBER (MEMBER_ID, LOGIN_ID, PASSWORD, NAME, BIRTHDAY, GENDER, ADDRESS, STATUS, IS_ONLINE, CREATED_AT)
-VALUES (MEMBER_SEQ.NEXTVAL, 'user05', '$2a$10$C/WGMjLT/xqFQcHbumQ/ieKD896NoUojmIEXlhww0TDuWfxNE/L1q', '테스트유저05', '1988-08-08', 'M', '서울시 영등포구', 'ACTIVE', 0, SYSDATE);
+VALUES (MEMBER_SEQ.NEXTVAL, 'user05', '$2a$10$8lZr.AaH4sEiB1rY8D4KwgZsXdZ0HrA/Y3C/t.x3p0h3I1d4E5F6G', '테스트유저05', '1988-08-08', 'M', '서울시 영등포구', 'ACTIVE', 0, SYSDATE);
 
 COMMIT;
 
@@ -1349,75 +1349,92 @@ UPDATE QUIZ SET POINT = 300 WHERE DIFFICULTY = 'Hard';
 COMMIT;
 
 -- ===================================================
--- 추가 초기 데이터 (포인트 2만점, 건의사항, 채팅)
+-- 추가 초기 데이터 (포인트 2만점, 건의사항, 채팅, 커뮤니티)
 -- ===================================================
 DECLARE
+    -- 채팅방용 변수
     v_room1_id NUMBER;
     v_room2_id NUMBER;
     v_room3_id NUMBER;
     v_room4_id NUMBER;
+    -- 커뮤니티용 변수
+    v_post1_id NUMBER;
+    v_post2_id NUMBER;
+    v_post3_id NUMBER;
+    v_post4_id NUMBER;
+    v_post5_id NUMBER;
 BEGIN
     -- 1. 유저들에게 넉넉한 포인트 지급 (1~6번 유저 전부)
-    UPDATE MEMBER SET TOTAL_POINTS = 20000;
+    UPDATE POINT_WALLET SET NOW_POINT = 20000, TOTAL_EARNED_POINT = 20000;
 
-    -- 2. 건의사항(INQUIRIES) 데이터 대폭 추가
+    -- 2. 건의사항(INQUIRIES) 데이터 추가
     INSERT INTO INQUIRIES (MEMBER_ID, TITLE, CONTENT, STATUS, ADMIN_REPLY, IS_PUBLIC, IS_FAQ)
-    VALUES (2, '지도 화면에 내 위치 버튼 추가해주세요', '지도 화면에서 바로 내 위치로 갈 수 있는 버튼이 있었으면 좋겠습니다. 매번 스크롤하기 불편해요.', 'PENDING', NULL, 'Y', 'N');
-
-    INSERT INTO INQUIRIES (MEMBER_ID, TITLE, CONTENT, STATUS, ADMIN_REPLY, IS_PUBLIC, IS_FAQ)
-    VALUES (3, '포인트 상점 상품 건의', '포인트 샵에 텀블러 같은 실물 상품도 추가될 수 있나요?', 'RESOLVED', '안녕하세요! 좋은 건의사항 감사합니다. 현재 실물 상품 연계를 긍정적으로 검토 중입니다. 조금만 기다려주세요!', 'Y', 'N');
+    VALUES (2, '지도 화면에 내 위치 버튼 추가해주세요', '지도 화면에서 바로 내 위치로 갈 수 있는 버튼이 있었으면 좋겠습니다.', 'SUBMITTED', NULL, 'Y', 'N');
 
     INSERT INTO INQUIRIES (MEMBER_ID, TITLE, CONTENT, STATUS, ADMIN_REPLY, IS_PUBLIC, IS_FAQ)
-    VALUES (2, '회원 탈퇴는 어떻게 하나요?', '마이페이지에서 탈퇴 버튼을 못 찾겠어요.', 'RESOLVED', '마이페이지 우측 상단의 톱니바퀴 아이콘(설정)을 누르시면 회원 탈퇴 메뉴를 찾으실 수 있습니다.', 'N', 'N');
+    VALUES (3, '포인트 상점 상품 건의', '포인트 샵에 텀블러 같은 실물 상품도 추가될 수 있나요?', 'COMPLETED', '안녕하세요! 긍정적으로 검토 중입니다.', 'Y', 'N');
 
     INSERT INTO INQUIRIES (MEMBER_ID, TITLE, CONTENT, STATUS, ADMIN_REPLY, IS_PUBLIC, IS_FAQ)
-    VALUES (4, '앱 로딩 속도가 조금 느린 것 같습니다', '특히 날씨 정보 불러올 때 시간이 오래 걸려요. 개선이 가능할까요?', 'PENDING', NULL, 'Y', 'N');
+    VALUES (2, '회원 탈퇴는 어떻게 하나요?', '마이페이지에서 탈퇴 버튼을 못 찾겠어요.', 'COMPLETED', '설정 메뉴에서 찾으실 수 있습니다.', 'N', 'N');
 
     INSERT INTO INQUIRIES (MEMBER_ID, TITLE, CONTENT, STATUS, ADMIN_REPLY, IS_PUBLIC, IS_FAQ)
-    VALUES (5, '퀴즈 난이도 조절 요청', '어려움 난이도 퀴즈가 너무 전문적이어서 풀기가 어렵습니다 ㅠㅠ', 'RESOLVED', '의견 감사합니다. 다음 퀴즈 업데이트 시 난이도를 조정하여 반영하도록 하겠습니다!', 'Y', 'N');
+    VALUES (4, '앱 로딩 속도가 조금 느린 것 같습니다', '특히 날씨 정보 불러올 때 시간이 오래 걸려요.', 'SUBMITTED', NULL, 'Y', 'N');
 
     INSERT INTO INQUIRIES (MEMBER_ID, TITLE, CONTENT, STATUS, ADMIN_REPLY, IS_PUBLIC, IS_FAQ)
-    VALUES (3, '버그 제보합니다', '커뮤니티에서 글 수정 버튼이 가끔 눌리지 않는 현상이 있습니다.', 'PENDING', NULL, 'Y', 'N');
+    VALUES (5, '퀴즈 난이도 조절 요청', '어려움 난이도 퀴즈가 너무 전문적이어서 풀기가 어렵습니다.', 'COMPLETED', '의견 감사합니다. 조정하도록 하겠습니다!', 'Y', 'N');
 
-    -- 3. 채팅 (CHAT_ROOM, CHAT_ROOM_USER, CHAT_MESSAGE) 데이터 대폭 추가
-    
-    -- 채팅방 1: 고객센터 (관리자 1, 유저 2) - 기존
-    INSERT INTO CHAT_ROOM (TITLE, ROOM_TYPE) VALUES ('고객센터 문의', 'PERSONAL') RETURNING CHAT_ROOM_ID INTO v_room1_id;
+    INSERT INTO INQUIRIES (MEMBER_ID, TITLE, CONTENT, STATUS, ADMIN_REPLY, IS_PUBLIC, IS_FAQ)
+    VALUES (3, '버그 제보합니다', '커뮤니티에서 글 수정 버튼이 가끔 눌리지 않는 현상이 있습니다.', 'PROCESSING', NULL, 'Y', 'N');
+
+    -- 3. 채팅 (CHAT_ROOM, CHAT_ROOM_USER, CHAT_MESSAGE) 데이터 추가
+    INSERT INTO CHAT_ROOM (TITLE, ROOM_TYPE) VALUES ('고객센터 문의', 'SINGLE') RETURNING CHAT_ROOM_ID INTO v_room1_id;
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room1_id, 1, 'ADMIN');
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room1_id, 2, 'MEMBER');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room1_id, 2, '안녕하세요, 건의사항 게시판에 글을 남겼는데 혹시 확인되셨나요?', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room1_id, 1, '네, 안녕하세요! 확인 후 답변 달아드렸습니다.', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room1_id, 2, '빠른 처리 감사합니다!', 'TEXT');
+    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room1_id, 2, '안녕하세요, 건의사항 게시판 확인 부탁드려요.', 'TEXT');
 
-    -- 채팅방 2: 에코 챌린지 모임 (유저 2, 3, 4) - 그룹 확장
     INSERT INTO CHAT_ROOM (TITLE, ROOM_TYPE) VALUES ('이번주 플로깅 가실 분!', 'GROUP') RETURNING CHAT_ROOM_ID INTO v_room2_id;
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room2_id, 2, 'MEMBER');
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room2_id, 3, 'MEMBER');
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room2_id, 4, 'MEMBER');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room2_id, 2, '이번 주 일요일 오전 10시에 한강 공원 플로깅 어떠세요?', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room2_id, 3, '좋아요! 저도 참석할게요.', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room2_id, 4, '저도 가고 싶은데 늦잠 잘까봐 걱정이네요 ㅋㅋ', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room2_id, 2, '일어나실 수 있게 아침에 카톡 드릴게요!', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room2_id, 4, '감사합니다 ㅠㅠ 준비물은 개인 집게랑 쓰레기봉투만 있으면 될까요?', 'TEXT');
+    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room2_id, 2, '이번 주 일요일 오전 10시에 플로깅 어떠세요?', 'TEXT');
 
-    -- 채팅방 3: 중고 거래 (유저 3, 유저 5) - 개인 거래
-    INSERT INTO CHAT_ROOM (TITLE, ROOM_TYPE) VALUES ('자전거 직거래 문의', 'PERSONAL') RETURNING CHAT_ROOM_ID INTO v_room3_id;
+    INSERT INTO CHAT_ROOM (TITLE, ROOM_TYPE) VALUES ('자전거 직거래 문의', 'SINGLE') RETURNING CHAT_ROOM_ID INTO v_room3_id;
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room3_id, 3, 'MEMBER');
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room3_id, 5, 'MEMBER');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room3_id, 5, '안녕하세요! 자전거 아직 판매 중이신가요?', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room3_id, 3, '네 아직 있습니다~', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room3_id, 5, '오늘 저녁에 홍대역에서 뵐 수 있을까요?', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room3_id, 3, '네 7시쯤 괜찮으신가요?', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room3_id, 5, '좋습니다. 이따 뵙겠습니다!', 'TEXT');
+    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room3_id, 5, '안녕하세요! 자전거 판매 중인가요?', 'TEXT');
 
-    -- 채팅방 4: 비건 레시피 공유방 (유저 2, 4, 5) - 그룹
     INSERT INTO CHAT_ROOM (TITLE, ROOM_TYPE) VALUES ('초보 비건 레시피 공유해요', 'GROUP') RETURNING CHAT_ROOM_ID INTO v_room4_id;
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room4_id, 2, 'MEMBER');
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room4_id, 4, 'MEMBER');
     INSERT INTO CHAT_ROOM_USER (CHAT_ROOM_ID, MEMBER_ID, ROLE) VALUES (v_room4_id, 5, 'MEMBER');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room4_id, 4, '혹시 두부 텐더 만들어보신 분 계신가요?', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room4_id, 5, '저요! 에어프라이어에 돌리면 진짜 맛있어요.', 'TEXT');
-    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room4_id, 2, '꿀팁 공유 감사합니다. 저도 오늘 저녁에 해먹어봐야겠네요.', 'TEXT');
+    INSERT INTO CHAT_MESSAGE (CHAT_ROOM_ID, SENDER_ID, CONTENT, MESSAGE_TYPE) VALUES (v_room4_id, 4, '두부 텐더 레시피 아시는 분?', 'TEXT');
+
+    -- 4. 커뮤니티 게시글 (COMMUNITY_POST) 및 댓글 (COMMUNITY_REPLY)
+    INSERT INTO COMMUNITY_POST (MEMBER_ID, TITLE, CONTENT, CATEGORY, VIEW_COUNT, LIKE_COUNT)
+    VALUES (2, '중고 텀블러 나눔합니다 (거의 새것)', '선물 받았는데 나눔해요. 깨끗하게 세척 완료했습니다!', '나눔', 15, 5)
+    RETURNING POST_ID INTO v_post1_id;
+    
+    INSERT INTO COMMUNITY_POST (MEMBER_ID, TITLE, CONTENT, CATEGORY, VIEW_COUNT, LIKE_COUNT)
+    VALUES (1, '오늘 한강 공원 플로깅 다녀왔어요!', '날씨가 너무 좋아서 산책 겸 쓰레기 줍고 왔습니다.', '자유', 42, 12)
+    RETURNING POST_ID INTO v_post2_id;
+    
+    INSERT INTO COMMUNITY_POST (MEMBER_ID, TITLE, CONTENT, CATEGORY, VIEW_COUNT, LIKE_COUNT)
+    VALUES (4, '이번 주 환경 퀘스트 5개 올클리어 인증!', '에코트리도 벌써 2단계입니다!', '인증', 28, 8)
+    RETURNING POST_ID INTO v_post3_id;
+    
+    INSERT INTO COMMUNITY_POST (MEMBER_ID, TITLE, CONTENT, CATEGORY, VIEW_COUNT, LIKE_COUNT)
+    VALUES (3, '헷갈리기 쉬운 분리배출 꿀팁 정리', '영수증은 일반쓰레기입니다! 다들 잊지 마세요.', '정보', 105, 25)
+    RETURNING POST_ID INTO v_post4_id;
+    
+    INSERT INTO COMMUNITY_POST (MEMBER_ID, TITLE, CONTENT, CATEGORY, VIEW_COUNT, LIKE_COUNT)
+    VALUES (5, '상점에서 파는 뱃지 너무 귀여워요ㅠㅠ', '다들 어떤 거 목표로 하시나요?', '기타', 56, 10)
+    RETURNING POST_ID INTO v_post5_id;
+
+    INSERT INTO COMMUNITY_REPLY (POST_ID, MEMBER_ID, CONTENT, GROUP_ID, DEPTH) VALUES (v_post1_id, 3, '저 신청해도 될까요?', v_post1_id, 0);
+    INSERT INTO COMMUNITY_REPLY (POST_ID, MEMBER_ID, CONTENT, GROUP_ID, DEPTH) VALUES (v_post2_id, 2, '고생하셨습니다!', v_post2_id, 0);
+    INSERT INTO COMMUNITY_REPLY (POST_ID, MEMBER_ID, CONTENT, GROUP_ID, DEPTH) VALUES (v_post3_id, 5, '축하드려요! 부럽습니다.', v_post3_id, 0);
+    INSERT INTO COMMUNITY_REPLY (POST_ID, MEMBER_ID, CONTENT, GROUP_ID, DEPTH) VALUES (v_post4_id, 1, '좋은 정보 감사합니다.', v_post4_id, 0);
+    INSERT INTO COMMUNITY_REPLY (POST_ID, MEMBER_ID, CONTENT, GROUP_ID, DEPTH) VALUES (v_post5_id, 4, '저는 에코 가디언 노리고 있어요!', v_post5_id, 0);
 
     COMMIT;
 END;
