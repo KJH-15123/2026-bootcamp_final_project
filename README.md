@@ -21,11 +21,8 @@
 </p>
 
 <div align="center">
-````carousel
-![메인 화면 1](./source/메인1.png)
-<!-- slide -->
-![메인 화면 2](./source/메인2.png)
-````
+  <img src="./source/메인1.png" width="49%" alt="메인 화면 1">
+  <img src="./source/메인2.png" width="49%" alt="메인 화면 2">
 </div>
 
 ---
@@ -75,18 +72,7 @@
 - **글로벌 통신 및 비동기 경험:** 사용자가 어느 페이지에 있든 플랫폼 생태계 내의 활동(채팅 알림 등)을 즉각 인지할 수 있는 실시간 반응형 아키텍처 구축.
 - **AI 활용과 신뢰도 결합:** 단순 API 호출을 넘어 수집된 원천 데이터를 AI가 가공·번역함으로써 사용자에게 양질의 환경 정보를 제공.
 <br>
-
-````carousel
-![시스템 개요](./source/planning/overview.png)
-<!-- slide -->
-![보안 및 인증 설계](./source/planning/member_security.png)
-<!-- slide -->
-![지도 및 공공데이터 활용](./source/planning/map_data.png)
-<!-- slide -->
-![아이템 및 경제 시스템](./source/planning/shop_item.png)
-<!-- slide -->
-![UI/UX 및 컴포넌트 설계](./source/planning/ui_ux.png)
-````
+<img src="./source/planning/overview.png" width="100%" alt="시스템 개요 설계">
 
 
 **🗺️ 5. IA (정보 구조도) 및 기술 아키텍처**
@@ -104,42 +90,37 @@
 **💡 8. 주요 기능 요약**
 - 👤 **회원 및 관리자 기능 (Member & Admin)**
   - JWT 기반 자체 로그인 및 카카오 소셜 로그인, 마이페이지 활동 내역 관리
+  <br>
+  <img src="./source/소셜 로그인.png" width="100%" alt="회원 기능 미리보기">
+
 - 🌱 **탄소 발자국 추적 및 에코 맵 (Map & Carbon Tracking)**
   - 제로 웨이스트 상점 등 서울시 환경 테마 요소를 지도로 탐색 및 맞춤형 길찾기 제공
-  - 이동 거리 기반 정밀 탄소 절감량 계산 및 에코 지갑 포인트 적립
   - 나무 성장(EcoTree) 시각화를 통한 게이미피케이션
+  <br>
+  <img src="./source/지도.png" width="49%" alt="에코맵 탐색">
+  <img src="./source/지도_길찾기.png" width="49%" alt="에코맵 길찾기">
+
 - 💬 **실시간 커뮤니티 및 채팅 (Community & Chat)**
   - 친환경 실천 기록 공유 게시판 및 사용자 간 실시간 양방향 채팅
-  - 플랫폼 내 어디서든 수신 가능한 전역 채팅 알림망 구축
+  <br>
+  <img src="./source/채팅-메인.png" width="100%" alt="채팅 기능 미리보기">
+
 - 🌤️ **AI 환경 비서 및 날씨/뉴스 (Weather, News & AI)**
-  - 미세먼지 등 공공 데이터 연동 및 맞춤형 환경 실천 조언(비서 멘트) 생성
-  - 신뢰도 높은 글로벌 환경 뉴스 수집 및 Gemini AI 실시간 번역 요약 제공
+  - 미세먼지 데이터 연동 및 Gemini AI 실시간 번역 요약 환경 뉴스 제공
+  <br>
+  <img src="./source/메인1.png" width="49%" alt="AI 환경 비서">
+  <img src="./source/메인2.png" width="49%" alt="글로벌 환경 뉴스">
 
-**📸 9. 주요 기능 스크린샷 (Screenshots)**
+- 🎮 **게이미피케이션 (Quest, Quiz & Attendance)**
+  - 데일리 퀘스트, 환경 퀴즈, 출석 체크를 통한 포인트 적립 및 에코트리 성장
+  <br>
+  <img src="./source/퀘스트_메인.png" width="100%" alt="게이미피케이션 미리보기">
 
-````carousel
-![메인 대시보드](./source/메인1.png)
-<!-- slide -->
-![실시간 채팅](./source/채팅-메인.png)
-<!-- slide -->
-![에코맵 탐색](./source/지도.png)
-<!-- slide -->
-![에코맵 길찾기](./source/지도_길찾기.png)
-<!-- slide -->
-![에코맵 리뷰](./source/지도_리뷰.png)
-<!-- slide -->
-![데일리 퀘스트](./source/퀘스트_메인.png)
-<!-- slide -->
-![환경 퀴즈](./source/퀴즈_메인.png)
-<!-- slide -->
-![출석 체크](./source/출석_메인.png)
-<!-- slide -->
-![포인트 상점](./source/에코샵.png)
-<!-- slide -->
-![아이템 뽑기](./source/포인트샵-뽑기1.png)
-<!-- slide -->
-![마이페이지 아이템](./source/마이페이지-아이템.png)
-````
+- 🛒 **에코 상점 및 아이템 (Shop & Inventory)**
+  - 획득한 포인트로 랜덤 아이템 뽑기 및 프로필 꾸미기 아이템 장착
+  <br>
+  <img src="./source/에코샵.png" width="49%" alt="에코 상점">
+  <img src="./source/포인트샵-뽑기1.png" width="49%" alt="아이템 가챠">
 
 </details>
 
