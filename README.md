@@ -21,7 +21,11 @@
 </p>
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x450.png?text=EasyEarth+Main+Dashboard" width="90%" alt="메인 화면 미리보기">
+````carousel
+![메인 화면 1](./source/메인1.png)
+<!-- slide -->
+![메인 화면 2](./source/메인2.png)
+````
 </div>
 
 ---
@@ -70,6 +74,20 @@
 **🎨 4. 기획 방향성 설계**
 - **글로벌 통신 및 비동기 경험:** 사용자가 어느 페이지에 있든 플랫폼 생태계 내의 활동(채팅 알림 등)을 즉각 인지할 수 있는 실시간 반응형 아키텍처 구축.
 - **AI 활용과 신뢰도 결합:** 단순 API 호출을 넘어 수집된 원천 데이터를 AI가 가공·번역함으로써 사용자에게 양질의 환경 정보를 제공.
+<br>
+
+````carousel
+![시스템 개요](./source/planning/overview.png)
+<!-- slide -->
+![보안 및 인증 설계](./source/planning/member_security.png)
+<!-- slide -->
+![지도 및 공공데이터 활용](./source/planning/map_data.png)
+<!-- slide -->
+![아이템 및 경제 시스템](./source/planning/shop_item.png)
+<!-- slide -->
+![UI/UX 및 컴포넌트 설계](./source/planning/ui_ux.png)
+````
+
 
 **🗺️ 5. IA (정보 구조도) 및 기술 아키텍처**
 - GNB 중심의 서비스 계층 구조와 핵심 비즈니스 로직을 수행하는 API 명세서
@@ -96,6 +114,32 @@
 - 🌤️ **AI 환경 비서 및 날씨/뉴스 (Weather, News & AI)**
   - 미세먼지 등 공공 데이터 연동 및 맞춤형 환경 실천 조언(비서 멘트) 생성
   - 신뢰도 높은 글로벌 환경 뉴스 수집 및 Gemini AI 실시간 번역 요약 제공
+
+**📸 9. 주요 기능 스크린샷 (Screenshots)**
+
+````carousel
+![메인 대시보드](./source/메인1.png)
+<!-- slide -->
+![실시간 채팅](./source/채팅-메인.png)
+<!-- slide -->
+![에코맵 탐색](./source/지도.png)
+<!-- slide -->
+![에코맵 길찾기](./source/지도_길찾기.png)
+<!-- slide -->
+![에코맵 리뷰](./source/지도_리뷰.png)
+<!-- slide -->
+![데일리 퀘스트](./source/퀘스트_메인.png)
+<!-- slide -->
+![환경 퀴즈](./source/퀴즈_메인.png)
+<!-- slide -->
+![출석 체크](./source/출석_메인.png)
+<!-- slide -->
+![포인트 상점](./source/에코샵.png)
+<!-- slide -->
+![아이템 뽑기](./source/포인트샵-뽑기1.png)
+<!-- slide -->
+![마이페이지 아이템](./source/마이페이지-아이템.png)
+````
 
 </details>
 
@@ -169,19 +213,19 @@
 **1) 전역 알림 기반 실시간 채팅 커뮤니티**
 - 어디서든 수신 가능한 전역 STOMP 채널을 통해 끊김 없는 알림을 제공하며, 사용자 간 실시간 양방향 소통이 가능한 채팅방을 지원합니다.
 <br>
-<img src="./source/채팅_메인.png" width="100%" alt="실시간 채팅 및 전역 알림 화면">
+<img src="./source/채팅-메인.png" width="100%" alt="실시간 채팅 및 전역 알림 화면">
 
 
 **2) 맞춤형 날씨 정보 및 AI 환경 비서**
 - 기상청 실시간 데이터와 Google Gemini AI를 연동하여, 현재 날씨와 맥락에 맞는 친환경 실천 멘트를 대시보드에서 즉각 제공합니다.
 <br>
-<img src="./source/날씨_비서.png" width="100%" alt="날씨 정보 및 AI 환경 비서 화면">
+<img src="./source/메인1.png" width="100%" alt="날씨 정보 및 AI 환경 비서 화면">
 
 
 **3) 글로벌 환경 뉴스 수집 및 AI 요약 번역**
 - NYT 등 해외 유력 언론사의 환경 섹션 기사를 실시간 수집하고, AI를 통해 빠르고 정확하게 한글로 번역 및 요약하여 제공합니다.
 <br>
-<img src="./source/환경_뉴스.png" width="100%" alt="글로벌 환경 뉴스 화면">
+<img src="./source/메인2.png" width="100%" alt="글로벌 환경 뉴스 화면">
 
 </details>
 
