@@ -89,7 +89,7 @@
   - JWT 기반 자체 로그인 및 카카오 소셜 로그인, 마이페이지 활동 내역 관리
   <br>
   <div align="center">
-    <img src="./source/소셜 로그인.png" width="80%" alt="회원 기능 미리보기">
+    <img src="./source/소셜 로그인.png" width="49%" alt="회원 기능 미리보기">
   </div>
 
 - 🌱 **탄소 발자국 추적 및 에코 맵 (Map & Carbon Tracking)**
@@ -104,7 +104,7 @@
   - 플랫폼 내 어디서든 수신 가능한 전역 채팅 알림망 구축
   <br>
   <div align="center">
-    <img src="./source/채팅-메인.png" width="80%" alt="채팅 기능 미리보기">
+    <img src="./source/채팅-메인.png" width="49%" alt="채팅 기능 미리보기">
   </div>
 
 - 🌤️ **AI 환경 비서 및 날씨/뉴스 (Weather, News & AI)**
@@ -117,7 +117,7 @@
   - 데일리 퀘스트, 환경 퀴즈, 출석 체크를 통한 포인트 적립 및 에코트리 성장
   <br>
   <div align="center">
-    <img src="./source/퀘스트_메인.png" width="80%" alt="게이미피케이션 미리보기">
+    <img src="./source/퀘스트_메인.png" width="49%" alt="게이미피케이션 미리보기">
   </div>
 
 - 🛒 **에코 상점 및 아이템 (Shop & Inventory)**
@@ -200,14 +200,14 @@
 - 로그인 직후 전역 STOMP 채널에 자동으로 구독되어, **채팅 화면이 아닌 어느 페이지(커뮤니티, 메인 등)에서도 실시간 알림 배지**를 즉각 수신할 수 있습니다.
 <br>
 <div align="center">
-  <img src="./source/채팅-외부 알람.png" width="80%" alt="전역 알림 시스템">
+  <img src="./source/채팅-외부 알람.png" width="49%" alt="전역 알림 시스템">
 </div>
 
 **2) 채팅방 목록 및 초대 관리 시스템**
 - 사이드바를 통해 현재 참여 중인 채팅방 목록을 실시간으로 확인하고, 새로운 채팅 초대를 받았을 때 즉각적으로 **수락 또는 거절**을 선택할 수 있는 직관적인 UI를 제공합니다.
 <br>
 <div align="center">
-  <img src="./source/채팅-프로필,채팅리스트.png" width="70%" alt="채팅방 목록 및 초대 관리">
+  <img src="./source/채팅-프로필,채팅리스트.png" width="49%" alt="채팅방 목록 및 초대 관리">
 </div>
 
 **3) 유연한 1:1 및 그룹 채팅 생성**
@@ -222,7 +222,7 @@
 - 플랫폼 내에서 활동 중인 유저의 프로필을 클릭하여 **현재 접속 상태(Online/Offline)**를 실시간으로 확인하고, 그 자리에서 바로 1:1 채팅을 신청할 수 있습니다.
 <br>
 <div align="center">
-  <img src="./source/유저 클릭시 온라인확인,1대1신청기능.png" width="70%" alt="유저 온라인 상태 및 소통">
+  <img src="./source/유저 클릭시 온라인확인,1대1신청기능.png" width="49%" alt="유저 온라인 상태 및 소통">
 </div>
 
 **5) 체계적인 방장 권한 및 멤버 관리**
@@ -237,14 +237,14 @@
 - 채팅방의 성격에 맞춰 **방 이름과 프로필 이미지**를 자유롭게 변경할 수 있어, 커뮤니티의 개성과 목적을 명확히 시각화할 수 있습니다.
 <br>
 <div align="center">
-  <img src="./source/채팅방관리2.png" width="70%" alt="채팅방 설정 최적화">
+  <img src="./source/채팅방관리2.png" width="49%" alt="채팅방 설정 최적화">
 </div>
 
 **7) 채팅 고급 기능 (공지, 공감, 답장, 날짜)**
 - 핵심 정보를 상단에 고정하는 **공지사항**, 특정 메시지에 대한 **공감(리액션) 및 답장**, 날짜별 구분선 및 **마지막 읽은 위치로 즉시 이동**하는 편의 기능을 모두 지원합니다.
 <br>
 <div align="center">
-  <img src="./source/공지,마지막 읽음 이동, 날짜,공감,답장,초대 시스템 알람 등.png" width="80%" alt="채팅 고급 편의 기능">
+  <img src="./source/공지,마지막 읽음 이동, 날짜,공감,답장,초대 시스템 알람 등.png" width="49%" alt="채팅 고급 편의 기능">
 </div>
 
 **8) 미디어 공유 및 강력한 메시지 검색**
@@ -259,14 +259,14 @@
 - 기상청 실시간 데이터와 Google Gemini AI를 연동하여, 현재 날씨와 맥락에 맞는 **친환경 실천 멘트**를 대시보드에서 즉각 제공합니다.
 <br>
 <div align="center">
-  <img src="./source/메인1.png" width="80%" alt="AI 환경 비서">
+  <img src="./source/메인1.png" width="49%" alt="AI 환경 비서">
 </div>
 
 **10) 글로벌 환경 뉴스 수집 및 AI 요약 번역**
 - NYT 등 해외 유력 언론사의 환경 섹션 기사를 실시간 수집하고, AI를 통해 빠르고 정확하게 **한글로 번역 및 핵심 요약**하여 제공합니다.
 <br>
 <div align="center">
-  <img src="./source/메인2.png" width="80%" alt="글로벌 환경 뉴스 AI 가공">
+  <img src="./source/메인2.png" width="49%" alt="글로벌 환경 뉴스 AI 가공">
 </div>
 
 </details>
